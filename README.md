@@ -16,10 +16,22 @@ var api = new YahooFinanceAPI();
 
 ## Get Headlines
 
+You can get news headlines for multiple tickers.
+
 ```js
 api
-  .getHeadlines('aapl,yhoo,msft')
+  .getHeadlines('AAPL,YHOO,MSFT')
   .then(function(res) {
-    console.log("RES ?", res);
+    console.log("HEADLINES ?", res[0].item);
   })
+```
+
+## Get quote
+
+```js
+api
+  .getQuote('AAPL')
+  .then(function(res) {
+    console.log("QUOTE ?", res.query.results.quote);
+  });
 ```
