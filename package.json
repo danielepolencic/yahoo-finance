@@ -1,0 +1,25 @@
+{
+  "name": "yahoo-finance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/yahoo.finance.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp",
+    "demo": "node ./demo.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1",
+    "xml2js": "^0.4.17"
+  }
+}
