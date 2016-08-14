@@ -22,7 +22,7 @@ You can get news headlines for multiple tickers.
 api
   .getHeadlines('AAPL,YHOO,MSFT')
   .then(function(res) {
-    console.log("HEADLINES ?", res.item);
+    console.log("HEADLINES ?", res.headlines);
   })
 ```
 
