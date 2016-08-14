@@ -35,3 +35,13 @@ api
     console.log("QUOTE ?", res.query.results.quote);
   });
 ```
+
+## Historical Data
+
+```js
+api.
+  getHistoricalData('AAPL', '2016-01-01', '2016-02-01')
+  .then(function(res) {
+    console.log("DATA ?", res.query.results);
+  });
+```
