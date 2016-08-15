@@ -12,7 +12,11 @@
   "pre-commit": [
     "coverage"
   ],
-  "author": "",
+  "author": "Stephane P. Pericat <contact@shortwavapp.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephanepericat/yahoo-finance"
+  },
   "license": "MIT",
   "devDependencies": {
     "expect.js": "^0.3.1",
