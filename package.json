@@ -10,7 +10,7 @@
     "coverage": "./node_modules/.bin/istanbul cover node_modules/.bin/_mocha && open ./coverage/lcov-report/index.html"
   },
   "pre-commit": [
-    "test"
+    "coverage"
   ],
   "author": "",
   "license": "MIT",
