@@ -6,7 +6,9 @@ a node wrapper to call the various yahoo finance apis
 
 ## Install
 
+```shell
 npm install yahoo-finance-data
+```
 
 ## Getting started
 
