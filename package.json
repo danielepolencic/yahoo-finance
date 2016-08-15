@@ -1,6 +1,6 @@
 {
   "name": "yahoo-finance-data",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "build/yahoo.finance.js",
   "global": false,
