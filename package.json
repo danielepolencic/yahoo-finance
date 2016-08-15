@@ -2,7 +2,9 @@
   "name": "yahoo-finance-data",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/yahoo.finance.js",
+  "main": "build/yahoo.finance.js",
+  "global": false,
+  "private": false,
   "scripts": {
     "test": "./node_modules/.bin/mocha test/*.spec.js",
     "build": "gulp",
