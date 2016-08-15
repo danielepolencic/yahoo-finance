@@ -1,15 +1,17 @@
+[![Build Status](https://travis-ci.org/stephanepericat/yahoo-finance.svg?branch=master)](https://travis-ci.org/stephanepericat/yahoo-finance)
+
 # yahoo-finance
 
 a node wrapper to call the various yahoo finance apis
 
 ## Install
 
-npm install yahoo-finance
+npm install yahoo-finance-data
 
 ## Getting started
 
 ```js
-var YahooFinanceAPI = require('./build/yahoo.finance.js');
+var YahooFinanceAPI = require('yahoo-finance-data');
 
 var api = new YahooFinanceAPI();
 ```
