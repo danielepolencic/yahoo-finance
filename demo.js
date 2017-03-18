@@ -49,12 +49,23 @@ router.get('/dividends/history/:ticker/:start/:end', (req, res) => {
 });
 
 /**
- * @desc Securities by sectorid
+ * @desc List of securities by sector id
  * @example http://localhost:3000/api/securities/bysector/812
  */
 router.get('/securities/bysector/:sectorid', (req, res) => {
   api
     .getSecuritiesBySectorIndex(req.params.sectorid)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc Forex data
+ * @example http://localhost:3000/api/forex/eurusd,gbpusd,cadusd
+ */
+router.get('/forex/:exchanges', (req, res) => {
+  api
+    .getForexData(req.params.exchanges)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });

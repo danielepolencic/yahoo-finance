@@ -105,6 +105,21 @@ api
   .catch(err => res.json(err));
 ```
 
+### getForexData(exchanges)
+
+Retrieves forex data for one or multiple currency pairs.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| exchanges    | String  | the list of currency pairs, comma-separated |
+
+```js
+api
+  .getForexData('eurusd,gbpusd,cadusd')
+  .then(data => res.json(data))
+  .catch(err => res.json(err));
+```
+
 <!-- ## Ticker Search
 
 ```js

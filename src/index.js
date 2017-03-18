@@ -15,7 +15,7 @@ export default class YahooFinanceAPI {
     return new Promise((resolve, reject) => {
       this.yql.execute(query, (err, res) => {
         if(err) {
-          reject(err);
+          reject({error: true, message: err.message});
         }
 
         if(typeof res === 'object') {
@@ -26,7 +26,7 @@ export default class YahooFinanceAPI {
           const data = JSON.parse(res);
           resolve(data);
         } catch(e) {
-          reject({error: e.message});
+          reject({error: true, message: e.message});
         }
       });
     });
@@ -45,7 +45,6 @@ export default class YahooFinanceAPI {
 
   getDividendsHistory(symbol, startDate, endDate) {
     const query = `select * from yahoo.finance.dividendhistory where symbol = "${symbol.toUpperCase()}" and startDate = "${startDate}" and endDate = "${endDate}"`;
-    console.log('DIVIDEND QUERY', query);
     return this.fetch(query);
   }
 
@@ -56,6 +55,12 @@ export default class YahooFinanceAPI {
 
   getSecuritiesBySectorIndex(sectorIndex) {
     const query = `select * from yahoo.finance.industry where id="${sectorIndex}"`;
+    return this.fetch(query);
+  }
+
+  getForexData(exchanges) {
+    const list = this.formatSymbolList(exchanges);
+    const query = `select * from yahoo.finance.xchange where pair in (${list})`;
     return this.fetch(query);
   }
 }
