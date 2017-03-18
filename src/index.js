@@ -2,7 +2,15 @@ import yql from 'yql-node';
 import rp from 'request-promise';
 import Promise from 'bluebird';
 
+/**
+ * @class YahooFinanceAPI
+ */
 export default class YahooFinanceAPI {
+  /**
+   * @constructor
+   * @param {Object} apiDetails
+   * @return undefined
+   */
   constructor(apiDetails) {
     if(!apiDetails) {
       throw new Error('You need to provide an API key and secret.');
@@ -16,6 +24,12 @@ export default class YahooFinanceAPI {
     });
   }
 
+  /**
+   * @method fetch
+   * @desc executes a YQL query
+   * @param {String} query
+   * @return {Promise}
+   */
   fetch(query) {
     return new Promise((resolve, reject) => {
       this.yql.execute(query, (err, res) => {
@@ -37,15 +51,33 @@ export default class YahooFinanceAPI {
     });
   }
 
+  /**
+   * @method formatSymbolList
+   * @desc formats a raw list of tickers to insert in a query
+   * @param {String} rawList
+   * @return {String}
+   */
   formatSymbolList(rawList) {
     const list = rawList.split(',').map(symbol => symbol.toUpperCase()).join('","');
     return `"${list}"`;
   }
 
+  /**
+   * @method uppercaseList
+   * @desc uppercases a raw list of tickers to insert in a query
+   * @param {String} rawList
+   * @return {String}
+   */
   uppercaseList(rawList) {
     return rawList.split(',').map(s => s.toUpperCase()).join(',');
   }
 
+  /**
+   * @method getQuotes
+   * @desc retrieves quote data
+   * @param {String} rawSymbolList
+   * @return {Promise}
+   */
   getQuotes(rawSymbolList) {
     const list = this.formatSymbolList(rawSymbolList);
     const query = `select * from yahoo.finance.quotes where symbol in (${list})`;

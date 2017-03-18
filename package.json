@@ -8,7 +8,7 @@
   "scripts": {
     "start": "nodemon demo --exec babel-node --presets es2015,stage-0",
     "build": "babel src/ -d build --plugins=transform-es2015-modules-commonjs",
-    "test": "babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha"
+    "test": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha"
   },
   "pre-commit": [],
   "author": "Stephane P. Pericat <contact@shortwavapp.com>",
