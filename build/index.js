@@ -24,7 +24,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * @class YahooFinanceAPI
+ */
 var YahooFinanceAPI = function () {
+  /**
+   * @constructor
+   * @param {Object} apiDetails
+   * @return undefined
+   */
   function YahooFinanceAPI(apiDetails) {
     _classCallCheck(this, YahooFinanceAPI);
 
@@ -39,6 +47,14 @@ var YahooFinanceAPI = function () {
       diagnostics: true
     });
   }
+
+  /**
+   * @method fetch
+   * @desc executes a YQL query
+   * @param {String} query
+   * @return {Promise}
+   */
+
 
   _createClass(YahooFinanceAPI, [{
     key: 'fetch',
@@ -64,6 +80,14 @@ var YahooFinanceAPI = function () {
         });
       });
     }
+
+    /**
+     * @method formatSymbolList
+     * @desc formats a raw list of tickers to insert in a query
+     * @param {String} rawList
+     * @return {String}
+     */
+
   }, {
     key: 'formatSymbolList',
     value: function formatSymbolList(rawList) {
@@ -72,6 +96,14 @@ var YahooFinanceAPI = function () {
       }).join('","');
       return '"' + list + '"';
     }
+
+    /**
+     * @method uppercaseList
+     * @desc uppercases a raw list of tickers to insert in a query
+     * @param {String} rawList
+     * @return {String}
+     */
+
   }, {
     key: 'uppercaseList',
     value: function uppercaseList(rawList) {
@@ -79,6 +111,14 @@ var YahooFinanceAPI = function () {
         return s.toUpperCase();
       }).join(',');
     }
+
+    /**
+     * @method getQuotes
+     * @desc retrieves quote data
+     * @param {String} rawSymbolList
+     * @return {Promise}
+     */
+
   }, {
     key: 'getQuotes',
     value: function getQuotes(rawSymbolList) {
@@ -86,6 +126,14 @@ var YahooFinanceAPI = function () {
       var query = 'select * from yahoo.finance.quotes where symbol in (' + list + ')';
       return this.fetch(query);
     }
+
+    /**
+     * @method getRealtimeQuotes
+     * @desc retrieves realtime quote data
+     * @param {String} rawSymbolList
+     * @return {Promise}
+     */
+
   }, {
     key: 'getRealtimeQuotes',
     value: function getRealtimeQuotes(rawSymbolList) {
@@ -93,24 +141,60 @@ var YahooFinanceAPI = function () {
       var query = 'select * from pm.finance where symbol="' + list + '"';
       return this.fetch(query);
     }
+
+    /**
+     * @method getDividendsHistory
+     * @desc retrieves dividend payout historical data
+     * @param {String} symbol
+     * @param {String} startDate
+     8 @param {String} endDate
+     * @return {Promise}
+     */
+
   }, {
     key: 'getDividendsHistory',
     value: function getDividendsHistory(symbol, startDate, endDate) {
       var query = 'select * from yahoo.finance.dividendhistory where symbol = "' + symbol.toUpperCase() + '" and startDate = "' + startDate + '" and endDate = "' + endDate + '"';
       return this.fetch(query);
     }
+
+    /**
+     * @method getHistoricalData
+     * @desc retrieves historical data
+     * @param {String} symbol
+     * @param {String} startDate
+     8 @param {String} endDate
+     * @return {Promise}
+     */
+
   }, {
     key: 'getHistoricalData',
     value: function getHistoricalData(symbol, startDate, endDate) {
       var query = 'select * from yahoo.finance.historicaldata where symbol = "' + symbol.toUpperCase() + '" and startDate = "' + startDate + '" and endDate = "' + endDate + '"';
       return this.fetch(query);
     }
+
+    /**
+     * @method getSecuritiesBySectorIndex
+     * @desc retrieves a list of securities belonging to a given sector
+     * @param {String} sectorIndex
+     * @return {Promise}
+     */
+
   }, {
     key: 'getSecuritiesBySectorIndex',
     value: function getSecuritiesBySectorIndex(sectorIndex) {
       var query = 'select * from yahoo.finance.industry where id="' + sectorIndex + '"';
       return this.fetch(query);
     }
+
+    /**
+     * @method getForexData
+     * @desc retrieves foreign exchange data
+     * @param {String} exchanges
+     * @return {Promise}
+     */
+
   }, {
     key: 'getForexData',
     value: function getForexData(exchanges) {
@@ -118,18 +202,44 @@ var YahooFinanceAPI = function () {
       var query = 'select * from yahoo.finance.xchange where pair in (' + list + ')';
       return this.fetch(query);
     }
+
+    /**
+     * @method getHeadlinesByTicker
+     * @desc retrieves news headlines
+     * @param {String} ticker
+     * @return {Promise}
+     */
+
   }, {
     key: 'getHeadlinesByTicker',
     value: function getHeadlinesByTicker(ticker) {
       var query = 'select * from pm.finance.articles where symbol in ("' + ticker.toUpperCase() + '")';
       return this.fetch(query);
     }
+
+    /**
+     * @method getIntradayChartData
+     * @desc retrieves intraday data
+     * @param {String} ticker
+     * @return {Promise}
+     */
+
   }, {
     key: 'getIntradayChartData',
     value: function getIntradayChartData(ticker) {
       var query = 'select * from pm.finance.graphs where symbol in ("' + ticker.toUpperCase() + '")';
       return this.fetch(query);
     }
+
+    /**
+     * @method tickerSearch
+     * @desc searches for matching tickers based on search term
+     * @param {String} searchTerm
+     * @param {String} region
+     * @param {String} lang
+     * @return {Promise}
+     */
+
   }, {
     key: 'tickerSearch',
     value: function tickerSearch(searchTerm) {
