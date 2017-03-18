@@ -14,17 +14,25 @@ router.get('/', (req, res) => {
   res.json({status: 'ok'})
 });
 
-router.get('/quote/realtime/:symbol', (req, res) => {
+/**
+ * @desc realtime quote data
+ * @example http://localhost:3000/api/quote/realtime/yhoo,msft,aapl
+ */
+router.get('/quote/realtime/:tickers', (req, res) => {
   api
-    .getRealtimeQuote(req.params.symbol)
-    .then(quote => {
-      try {
-        const parsedData = JSON.parse(quote);
-        res.json(parsedData);
-      } catch(e) {
-        res.json(e);
-      }
-    })
+    .getRealtimeQuote(req.params.tickers)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc historical data
+ * @example http://localhost:3000/api/quote/historical/yhoo/2017-01-01/2017-02-01
+ */
+router.get('/quote/historical/:ticker/:start/:end', (req, res) => {
+  api
+    .getHistoricalData(req.params.ticker, req.params.start, req.params.end)
+    .then(data => res.json(data))
     .catch(err => res.json(err));
 });
 
