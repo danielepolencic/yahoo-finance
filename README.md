@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.org/stephanepericat/yahoo-finance.svg?branch=master)](https://travis-ci.org/stephanepericat/yahoo-finance)
 
+[![npm version](https://badge.fury.io/js/yahoo-finance-data.svg)](https://badge.fury.io/js/yahoo-finance-data)
+
+[![NPM](https://nodei.co/npm/yahoo-finance-data.png)](https://nodei.co/npm/yahoo-finance-data/)
+
 # yahoo-finance
 
 A node wrapper to call the various Yahoo! Finance API's.
