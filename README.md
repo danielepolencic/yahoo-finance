@@ -125,7 +125,7 @@ api
   .catch(err => console.log(err));
 ```
 
-## getHeadlinesByTicker(ticker)
+### getHeadlinesByTicker(ticker)
 
 Retrieves news headlines for a given security.
 
@@ -140,7 +140,7 @@ api
   .catch(err => console.log(err));
 ```
 
-## getIntradayChartData(ticker)
+### getIntradayChartData(ticker)
 
 Retrieves intraday chart data for a given security.
 
@@ -155,7 +155,7 @@ api
   .catch(err => console.log(err));
 ```
 
-## tickerSearch(searchTerm, [region, lang])
+### tickerSearch(searchTerm, [region, lang])
 
 Retrieves matches for a given search term.
 
