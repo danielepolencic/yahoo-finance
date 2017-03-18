@@ -3,21 +3,35 @@ import express from 'express';
 
 const app = express();
 // get api keys  here: https://developer.yahoo.com/apps/create/
-const api = new YahooFinanceAPI();
+const api = new YahooFinanceAPI({
+  key: 'dj0yJmk9TE9NeVpMSXppS00zJmQ9WVdrOWNqaERkRkJETTJNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1lMw--',
+  secret: 'b9116f3047cd82192885c43d9b86c0c0a2bbf54b'
+});
 
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  res.json({status: 'ok'})
+  res.json({status: 'ok'});
 });
 
 /**
- * @desc standard yahoo quote data (15 min delay)
+ * @desc Standard Yahoo! Quote data (15 min delay)
  * @example http://localhost:3000/api/quote/info/yahoo,msft,aapl
  */
 router.get('/quote/info/:tickers', (req, res) => {
   api
     .getQuotes(req.params.tickers)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc Realtime Quote data
+ * @example http://localhost:3000/api/quote/realtime/yhoo,aapl,msft
+ */
+router.get('/quote/realtime/:tickers', (req, res) => {
+  api
+    .getRealtimeQuotes(req.params.tickers)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });
@@ -66,6 +80,39 @@ router.get('/securities/bysector/:sectorid', (req, res) => {
 router.get('/forex/:exchanges', (req, res) => {
   api
     .getForexData(req.params.exchanges)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc News Headlines by ticker
+ * @example http://localhost:3000/api/news/headlines/aapl
+ */
+router.get('/news/headlines/:ticker', (req, res) => {
+  api
+    .getHeadlinesByTicker(req.params.ticker)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc Chart data
+ * @example http://localhost:3000/api/chart/intraday/aapl
+ */
+router.get('/chart/intraday/:ticker', (req, res) => {
+  api
+    .getIntradayChartData(req.params.ticker)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc Ticker search
+ * @example http://localhost:3000/api/ticker/search/Apple%20Inc.
+ */
+router.get('/ticker/search/:searchterm', (req, res) => {
+  api
+    .tickerSearch(req.params.searchterm)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });

@@ -12,6 +12,10 @@ var _yqlNode = require('yql-node');
 
 var _yqlNode2 = _interopRequireDefault(_yqlNode);
 
+var _requestPromise = require('request-promise');
+
+var _requestPromise2 = _interopRequireDefault(_requestPromise);
+
 var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
@@ -21,10 +25,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var YahooFinanceAPI = function () {
-  function YahooFinanceAPI(authDetails) {
+  function YahooFinanceAPI(apiDetails) {
     _classCallCheck(this, YahooFinanceAPI);
 
-    this.yql = _yqlNode2.default.formatAsJSON();
+    if (!apiDetails) {
+      throw new Error('You need to provide an API key and secret.');
+    }
+
+    this.yql = _yqlNode2.default.formatAsJSON().withOAuth(apiDetails.key, apiDetails.secret);
 
     this.yql.setQueryParameter({
       env: 'store://datatables.org/alltableswithkeys',
@@ -65,10 +73,24 @@ var YahooFinanceAPI = function () {
       return '"' + list + '"';
     }
   }, {
+    key: 'uppercaseList',
+    value: function uppercaseList(rawList) {
+      return rawList.split(',').map(function (s) {
+        return s.toUpperCase();
+      }).join(',');
+    }
+  }, {
     key: 'getQuotes',
     value: function getQuotes(rawSymbolList) {
       var list = this.formatSymbolList(rawSymbolList);
       var query = 'select * from yahoo.finance.quotes where symbol in (' + list + ')';
+      return this.fetch(query);
+    }
+  }, {
+    key: 'getRealtimeQuotes',
+    value: function getRealtimeQuotes(rawSymbolList) {
+      var list = this.uppercaseList(rawSymbolList);
+      var query = 'select * from pm.finance where symbol="' + list + '"';
       return this.fetch(query);
     }
   }, {
@@ -95,6 +117,27 @@ var YahooFinanceAPI = function () {
       var list = this.formatSymbolList(exchanges);
       var query = 'select * from yahoo.finance.xchange where pair in (' + list + ')';
       return this.fetch(query);
+    }
+  }, {
+    key: 'getHeadlinesByTicker',
+    value: function getHeadlinesByTicker(ticker) {
+      var query = 'select * from pm.finance.articles where symbol in ("' + ticker.toUpperCase() + '")';
+      return this.fetch(query);
+    }
+  }, {
+    key: 'getIntradayChartData',
+    value: function getIntradayChartData(ticker) {
+      var query = 'select * from pm.finance.graphs where symbol in ("' + ticker.toUpperCase() + '")';
+      return this.fetch(query);
+    }
+  }, {
+    key: 'tickerSearch',
+    value: function tickerSearch(searchTerm) {
+      var region = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'US';
+      var lang = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
+
+      var query = 'http://d.yimg.com/aq/autoc?query=' + encodeURIComponent(searchTerm) + '&region=' + region + '&lang=' + lang;
+      return (0, _requestPromise2.default)(query);
     }
   }]);
 

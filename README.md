@@ -8,6 +8,10 @@
 
 A node wrapper to call the various Yahoo! Finance API's.
 
+## Prerequisites
+
+This module requires a Yahoo! API key. [More info here](https://developer.yahoo.com/apps/create/).
+
 ## Install
 
 ```shell
@@ -18,35 +22,18 @@ npm install yahoo-finance-data
 
 ```js
 import YahooFinanceAPI from 'yahoo-finance-data';
-const api = new YahooFinanceAPI();
+
+const api = new YahooFinanceAPI({
+  key: 'mylongyahooapikey',
+  secret: 'mylongyahooapisecret'
+});
 ```
 
-<!-- ## Get Headlines
-
-You can get news headlines for multiple tickers. -->
-
-<!-- ```js
-api
-  .getHeadlines('AAPL,YHOO,MSFT')
-  .then(function(res) {
-    console.log("HEADLINES ?", res.headlines);
-  })
-```
-
-## Get quote
-
-```js
-api
-  .getQuote('AAPL')
-  .then(function(res) {
-    console.log("QUOTE ?", res.quote);
-  });
-``` -->
 ## API
 
 ### getQuotes(symbolList)
 
-Retrieves quote data for one or more securities.
+Retrieves Yahoo! standard quote data for one or more securities (15 min delay).
 
 | Param        | Type    | Desc  |
 | ------------ |:-------:| :---- |
@@ -55,6 +42,21 @@ Retrieves quote data for one or more securities.
 ```js
 api
   .getQuotes('YHOO,MSFT,AAPL')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+### getReatimeQuotes(symbolList)
+
+Retrieves realtime quote data for one or more securities.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| symbolList   | String  | the ticker list, comma-separated |
+
+```js
+api
+  .getRealtimeQuotes('YHOO,MSFT,AAPL')
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```
@@ -123,12 +125,49 @@ api
   .catch(err => console.log(err));
 ```
 
-<!-- ## Ticker Search
+## getHeadlinesByTicker(ticker)
+
+Retrieves news headlines for a given security.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
 
 ```js
-api.
-  ticker('Apple')
-  .then(function(res) {
-    console.log("TICKER ?", res.search, res.results);
-  });
-``` -->
+api
+  .getHeadlinesByTicker('AAPL')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+## getIntradayChartData(ticker)
+
+Retrieves intraday chart data for a given security.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
+
+```js
+api
+  .getHeadlinesByTicker('AAPL')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+## tickerSearch(searchTerm, [region, lang])
+
+Retrieves matches for a given search term.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| searchTerm   | String  | the search query |
+| region       | String  | OPTIONAL the region (default: US) |
+| lang         | String  | OPTIONAL the language (default: en-US) |
+
+```js
+api
+  .tickerSearch('Apple Inc.')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```

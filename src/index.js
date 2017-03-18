@@ -1,9 +1,14 @@
 import yql from 'yql-node';
+import rp from 'request-promise';
 import Promise from 'bluebird';
 
 export default class YahooFinanceAPI {
-  constructor(authDetails) {
-    this.yql = yql.formatAsJSON();
+  constructor(apiDetails) {
+    if(!apiDetails) {
+      throw new Error('You need to provide an API key and secret.');
+    }
+
+    this.yql = yql.formatAsJSON().withOAuth(apiDetails.key, apiDetails.secret);
 
     this.yql.setQueryParameter({
       env: 'store://datatables.org/alltableswithkeys',
@@ -37,9 +42,19 @@ export default class YahooFinanceAPI {
     return `"${list}"`;
   }
 
+  uppercaseList(rawList) {
+    return rawList.split(',').map(s => s.toUpperCase()).join(',');
+  }
+
   getQuotes(rawSymbolList) {
     const list = this.formatSymbolList(rawSymbolList);
     const query = `select * from yahoo.finance.quotes where symbol in (${list})`;
+    return this.fetch(query);
+  }
+
+  getRealtimeQuotes(rawSymbolList) {
+    const list = this.uppercaseList(rawSymbolList);
+    const query = `select * from pm.finance where symbol="${list}"`;
     return this.fetch(query);
   }
 
@@ -62,5 +77,20 @@ export default class YahooFinanceAPI {
     const list = this.formatSymbolList(exchanges);
     const query = `select * from yahoo.finance.xchange where pair in (${list})`;
     return this.fetch(query);
+  }
+
+  getHeadlinesByTicker(ticker) {
+    const query = `select * from pm.finance.articles where symbol in ("${ticker.toUpperCase()}")`;
+    return this.fetch(query);
+  }
+
+  getIntradayChartData(ticker) {
+    const query = `select * from pm.finance.graphs where symbol in ("${ticker.toUpperCase()}")`;
+    return this.fetch(query);
+  }
+
+  tickerSearch(searchTerm, region = 'US', lang = 'en-US') {
+    const query = `http://d.yimg.com/aq/autoc?query=${encodeURIComponent(searchTerm)}&region=${region}&lang=${lang}`;
+    return rp(query);
   }
 }
