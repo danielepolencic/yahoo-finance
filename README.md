@@ -2,7 +2,7 @@
 
 # yahoo-finance
 
-a node wrapper to call the various yahoo finance apis.
+A node wrapper to call the various Yahoo! Finance API's.
 
 ## Install
 
@@ -13,9 +13,8 @@ npm install yahoo-finance-data
 ## Getting started
 
 ```js
-var YahooFinanceAPI = require('yahoo-finance-data');
-
-var api = new YahooFinanceAPI();
+import YahooFinanceAPI from 'yahoo-finance-data';
+const api = new YahooFinanceAPI();
 ```
 
 <!-- ## Get Headlines
