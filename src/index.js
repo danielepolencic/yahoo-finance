@@ -91,6 +91,19 @@ export default class YahooFinanceAPI {
 
   tickerSearch(searchTerm, region = 'US', lang = 'en-US') {
     const query = `http://d.yimg.com/aq/autoc?query=${encodeURIComponent(searchTerm)}&region=${region}&lang=${lang}`;
-    return rp(query);
+    return new Promise((resolve, reject) => {
+      rp(query)
+        .then(raw => {
+          try {
+            const data = JSON.parse(raw);
+            resolve(data);
+          } catch(e) {
+            reject({error: true, message: e.message});
+          }
+        })
+        .catch(err => {
+          reject({error: true, message: err.message});
+        });
+    });
   }
 }

@@ -137,7 +137,18 @@ var YahooFinanceAPI = function () {
       var lang = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
 
       var query = 'http://d.yimg.com/aq/autoc?query=' + encodeURIComponent(searchTerm) + '&region=' + region + '&lang=' + lang;
-      return (0, _requestPromise2.default)(query);
+      return new _bluebird2.default(function (resolve, reject) {
+        (0, _requestPromise2.default)(query).then(function (raw) {
+          try {
+            var data = JSON.parse(raw);
+            resolve(data);
+          } catch (e) {
+            reject({ error: true, message: e.message });
+          }
+        }).catch(function (err) {
+          reject({ error: true, message: err.message });
+        });
+      });
     }
   }]);
 
