@@ -1,12 +1,10 @@
 import YahooFinanceAPI from './src';
 import express from 'express';
+import apiDetails from './api_key';
 
 const app = express();
 // get api keys  here: https://developer.yahoo.com/apps/create/
-const api = new YahooFinanceAPI({
-  key: 'dj0yJmk9TE9NeVpMSXppS00zJmQ9WVdrOWNqaERkRkJETTJNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1lMw--',
-  secret: 'b9116f3047cd82192885c43d9b86c0c0a2bbf54b'
-});
+const api = new YahooFinanceAPI(apiDetails);
 
 const router = new express.Router();
 
