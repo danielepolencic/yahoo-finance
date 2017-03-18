@@ -14,8 +14,20 @@ export default class YahooFinanceAPI {
   fetch(query) {
     return new Promise((resolve, reject) => {
       this.yql.execute(query, (err, res) => {
-        if(err) reject(err);
-        else resolve(JSON.parse(res));
+        if(err) {
+          reject(err);
+        }
+
+        if(typeof res === 'object') {
+          resolve(res);
+        }
+
+        try {
+          const data = JSON.parse(res);
+          resolve(data);
+        } catch(e) {
+          reject({error: e.message});
+        }
       });
     });
   }
@@ -31,13 +43,14 @@ export default class YahooFinanceAPI {
     return this.fetch(query);
   }
 
-  // getDividendsHistory(symbol, startDate, endDate) {
-  //   const query = `select * from yahoo.finance.dividendhistory where symbol = "${symbol}" and startDate = "${startDate}" and endDate = "${endDate}"`;
-  //   return this.fetch(query);
-  // }
+  getDividendsHistory(symbol, startDate, endDate) {
+    const query = `select * from yahoo.finance.dividendhistory where symbol = "${symbol.toUpperCase()}" and startDate = "${startDate}" and endDate = "${endDate}"`;
+    console.log('DIVIDEND QUERY', query);
+    return this.fetch(query);
+  }
 
   getHistoricalData(symbol, startDate, endDate) {
-    const query = `select * from yahoo.finance.historicaldata where symbol = "${symbol}" and startDate = "${startDate}" and endDate = "${endDate}"`;
+    const query = `select * from yahoo.finance.historicaldata where symbol = "${symbol.toUpperCase()}" and startDate = "${startDate}" and endDate = "${endDate}"`;
     return this.fetch(query);
   }
 }

@@ -73,6 +73,23 @@ api
   .catch(err => console.log(err));
 ```
 
+### getDividendsHistory(symbol, startDate, endDate)
+
+Retrieves dividends historical data for a given security.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| symbol       | String  | the ticker |
+| start date   | String  | start date (2016-01-01) |
+| end date     | String  | end date (2016-12-31) |
+
+```js
+api
+  .getDividendsHistory('AAPL', '2016-01-01', '2016-12-31')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
 <!-- ## Ticker Search
 
 ```js

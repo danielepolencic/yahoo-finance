@@ -33,6 +33,19 @@ router.get('/quote/historical/:ticker/:start/:end', (req, res) => {
     .catch(err => res.json(err));
 });
 
+/**
+ * @desc Dividends history
+ * @example http://localhost:3000/api/dividends/history/aapl/2016-01-01/2016-12-31
+ */
+router.get('/dividends/history/:ticker/:start/:end', (req, res) => {
+  let {ticker, start, end} = req.params;
+
+  api
+    .getDividendsHistory(ticker, start, end)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
 app.use('/api', router);
 
 app.listen(3000);
