@@ -7,8 +7,7 @@
   "private": false,
   "scripts": {
     "start": "nodemon demo --exec babel-node --presets es2015,stage-0",
-    "build": "babel src/ -d build --plugins=transform-es2015-modules-commonjs",
-    "demo": "babel-node demo"
+    "build": "babel src/ -d build --plugins=transform-es2015-modules-commonjs"
   },
   "pre-commit": [],
   "author": "Stephane P. Pericat <contact@shortwavapp.com>",
@@ -31,6 +30,7 @@
     "webpack": "^1.14.0"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "yql-node": "^0.2.1"
   },
   "engine": {

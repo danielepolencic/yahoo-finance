@@ -2,7 +2,7 @@
 
 # yahoo-finance
 
-a node wrapper to call the various yahoo finance apis
+a node wrapper to call the various yahoo finance apis. THis module requires a Yahoo developer account and an [app key](https://developer.yahoo.com/apps/create/).
 
 ## Install
 
