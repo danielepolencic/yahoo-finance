@@ -27,8 +27,10 @@ router.get('/quote/info/:tickers', (req, res) => {
  * @example http://localhost:3000/api/quote/historical/yhoo/2017-01-01/2017-02-01
  */
 router.get('/quote/historical/:ticker/:start/:end', (req, res) => {
+  let {ticker, start, end} = req.params;
+
   api
-    .getHistoricalData(req.params.ticker, req.params.start, req.params.end)
+    .getHistoricalData(ticker, start, end)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });
@@ -42,6 +44,17 @@ router.get('/dividends/history/:ticker/:start/:end', (req, res) => {
 
   api
     .getDividendsHistory(ticker, start, end)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc Securities by sectorid
+ * @example http://localhost:3000/api/securities/bysector/812
+ */
+router.get('/securities/bysector/:sectorid', (req, res) => {
+  api
+    .getSecuritiesBySectorIndex(req.params.sectorid)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });

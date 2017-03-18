@@ -53,4 +53,9 @@ export default class YahooFinanceAPI {
     const query = `select * from yahoo.finance.historicaldata where symbol = "${symbol.toUpperCase()}" and startDate = "${startDate}" and endDate = "${endDate}"`;
     return this.fetch(query);
   }
+
+  getSecuritiesBySectorIndex(sectorIndex) {
+    const query = `select * from yahoo.finance.industry where id="${sectorIndex}"`;
+    return this.fetch(query);
+  }
 }

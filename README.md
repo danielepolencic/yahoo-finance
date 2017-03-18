@@ -90,6 +90,21 @@ api
   .catch(err => console.log(err));
 ```
 
+### getSecuritiesBySectorIndex(sectorIndex)
+
+Retrieves a list of securities for a given sector index.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| sectorIndex  | String  | the sector index |
+
+```js
+api
+  .getSecuritiesBySectorIndex(812)
+  .then(data => res.json(data))
+  .catch(err => res.json(err));
+```
+
 <!-- ## Ticker Search
 
 ```js
