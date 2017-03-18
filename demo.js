@@ -3,9 +3,7 @@ import express from 'express';
 import apiDetails from './api_key';
 
 const app = express();
-// get api keys  here: https://developer.yahoo.com/apps/create/
 const api = new YahooFinanceAPI(apiDetails);
-
 const router = new express.Router();
 
 router.get('/', (req, res) => {
