@@ -150,7 +150,7 @@ Retrieves intraday chart data for a given security.
 
 ```js
 api
-  .getHeadlinesByTicker('AAPL')
+  .getIntradayChartData('AAPL')
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```
