@@ -101,8 +101,8 @@ Retrieves a list of securities for a given sector index.
 ```js
 api
   .getSecuritiesBySectorIndex(812)
-  .then(data => res.json(data))
-  .catch(err => res.json(err));
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 ```
 
 ### getForexData(exchanges)
@@ -116,8 +116,8 @@ Retrieves forex data for one or multiple currency pairs.
 ```js
 api
   .getForexData('eurusd,gbpusd,cadusd')
-  .then(data => res.json(data))
-  .catch(err => res.json(err));
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 ```
 
 <!-- ## Ticker Search
