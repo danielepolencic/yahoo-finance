@@ -1,4 +1,4 @@
-import YahooFinanceAPI from './src/main';
+import YahooFinanceAPI from './src';
 import express from 'express';
 
 const app = express();

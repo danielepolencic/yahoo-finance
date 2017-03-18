@@ -2,11 +2,13 @@
   "name": "yahoo-finance-data",
   "version": "2.0.0",
   "description": "A node wrapper to call the various yahoo finance apis",
-  "main": "src/main.js",
+  "main": "build/index.js",
   "global": false,
   "private": false,
   "scripts": {
-    "start": "nodemon demo --exec babel-node --presets es2015,stage-0"
+    "start": "nodemon demo --exec babel-node --presets es2015,stage-0",
+    "build": "babel src/ -d build --plugins=transform-es2015-modules-commonjs",
+    "demo": "babel-node demo"
   },
   "pre-commit": [],
   "author": "Stephane P. Pericat <contact@shortwavapp.com>",
@@ -18,7 +20,7 @@
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-stage-0": "^6.22.0",
     "express": "^4.15.2",
