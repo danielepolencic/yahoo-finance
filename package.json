@@ -1,14 +1,12 @@
 {
   "name": "yahoo-finance-data",
-  "version": "1.0.1",
-  "description": "",
-  "main": "build/yahoo.finance.js",
+  "version": "2.0.0",
+  "description": "A node wrapper to call the various yahoo finance apis",
+  "main": "src/main.js",
   "global": false,
   "private": false,
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/*.spec.js",
-    "build": "",
-    "demo": "node ./demo.js"
+    "start": "babel-node demo"
   },
   "pre-commit": [],
   "author": "Stephane P. Pericat <contact@shortwavapp.com>",
@@ -18,11 +16,20 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "json-loader": "^0.5.4",
     "mocha": "^3.2.0",
     "pre-commit": "^1.2.2",
-    "webpack": "^2.2.1"
+    "webpack": "^1.14.0"
   },
   "dependencies": {
     "yql-node": "^0.2.1"
+  },
+  "engine": {
+    "node": ">=6.x"
   }
 }
