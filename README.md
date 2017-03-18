@@ -2,7 +2,7 @@
 
 # yahoo-finance
 
-a node wrapper to call the various yahoo finance apis. THis module requires a Yahoo developer account and an [app key](https://developer.yahoo.com/apps/create/).
+a node wrapper to call the various yahoo finance apis.
 
 ## Install
 
@@ -18,11 +18,11 @@ var YahooFinanceAPI = require('yahoo-finance-data');
 var api = new YahooFinanceAPI();
 ```
 
-## Get Headlines
+<!-- ## Get Headlines
 
-You can get news headlines for multiple tickers.
+You can get news headlines for multiple tickers. -->
 
-```js
+<!-- ```js
 api
   .getHeadlines('AAPL,YHOO,MSFT')
   .then(function(res) {
@@ -38,19 +38,42 @@ api
   .then(function(res) {
     console.log("QUOTE ?", res.quote);
   });
+``` -->
+## api
+
+### Get Quotes
+
+Retrieves quote data for one or more securities.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| symbolList   | String  | the ticker list, comma-separated |
+
+```js
+api.
+  getQuotes('YHOO,MSFT,AAPL')
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
 ```
 
-## Historical Data
+### Historical Data
+
+Retrieves historical data for a given security.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| symbol       | String  | the ticker |
+| start date   | String  | start date (2017-01-01) |
+| end date     | String  | end date (2017-01-01) |
 
 ```js
 api.
   getHistoricalData('AAPL', '2016-01-01', '2016-02-01')
-  .then(function(res) {
-    console.log("DATA ?", res.data);
-  });
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
 ```
 
-## Ticker Search
+<!-- ## Ticker Search
 
 ```js
 api.
@@ -58,4 +81,4 @@ api.
   .then(function(res) {
     console.log("TICKER ?", res.search, res.results);
   });
-```
+``` -->

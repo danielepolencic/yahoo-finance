@@ -3,10 +3,7 @@ import express from 'express';
 
 const app = express();
 // get api keys  here: https://developer.yahoo.com/apps/create/
-const api = new YahooFinanceAPI({
-  key: 'dj0yJmk9TE9NeVpMSXppS00zJmQ9WVdrOWNqaERkRkJETTJNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1lMw--',
-  secret: 'b9116f3047cd82192885c43d9b86c0c0a2bbf54b'
-});
+const api = new YahooFinanceAPI();
 
 const router = new express.Router();
 
@@ -15,12 +12,12 @@ router.get('/', (req, res) => {
 });
 
 /**
- * @desc realtime quote data
- * @example http://localhost:3000/api/quote/realtime/yhoo,msft,aapl
+ * @desc standard yahoo quote data (15 min delay)
+ * @example http://localhost:3000/api/quote/info/yahoo,msft,aapl
  */
-router.get('/quote/realtime/:tickers', (req, res) => {
+router.get('/quote/info/:tickers', (req, res) => {
   api
-    .getRealtimeQuote(req.params.tickers)
+    .getQuotes(req.params.tickers)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });
