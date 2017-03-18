@@ -65,4 +65,24 @@ describe('The Yahoo Finance Data module', () => {
       expect(list).to.equal('"YHOO","AAPL","MSFT"');
     });
   });
+
+  describe('The uppercaseList method', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should uppercase a list of symbols', () => {
+      let list = API.uppercaseList('yhoo,aapl,msft');
+      expect(list).to.equal('YHOO,AAPL,MSFT');
+    });
+  });
 });
