@@ -39,9 +39,9 @@ api
     console.log("QUOTE ?", res.quote);
   });
 ``` -->
-## api
+## API
 
-### Get Quotes
+### getQuotes(symbolList)
 
 Retrieves quote data for one or more securities.
 
@@ -50,13 +50,13 @@ Retrieves quote data for one or more securities.
 | symbolList   | String  | the ticker list, comma-separated |
 
 ```js
-api.
-  getQuotes('YHOO,MSFT,AAPL')
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
+api
+  .getQuotes('YHOO,MSFT,AAPL')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 ```
 
-### Historical Data
+### getHistoricalData(symbol, startDate, endDate)
 
 Retrieves historical data for a given security.
 
@@ -67,10 +67,10 @@ Retrieves historical data for a given security.
 | end date     | String  | end date (2017-01-01) |
 
 ```js
-api.
-  getHistoricalData('AAPL', '2016-01-01', '2016-02-01')
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
+api
+  .getHistoricalData('AAPL', '2016-01-01', '2016-02-01')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 ```
 
 <!-- ## Ticker Search
