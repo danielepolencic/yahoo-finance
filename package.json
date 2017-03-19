@@ -1,19 +1,16 @@
 {
   "name": "yahoo-finance-data",
-  "version": "1.0.1",
-  "description": "",
-  "main": "build/yahoo.finance.js",
+  "version": "2.0.0",
+  "description": "A node wrapper to call the various yahoo finance apis",
+  "main": "build/index.js",
   "global": false,
   "private": false,
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/*.spec.js",
-    "build": "gulp",
-    "demo": "node ./demo.js",
-    "coverage": "./node_modules/.bin/istanbul cover node_modules/.bin/_mocha && open ./coverage/lcov-report/index.html"
+    "start": "nodemon demo --exec babel-node --presets es2015,stage-0",
+    "build": "babel src/ -d build --plugins=transform-es2015-modules-commonjs",
+    "test": "node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha"
   },
-  "pre-commit": [
-    "coverage"
-  ],
+  "pre-commit": [],
   "author": "Stephane P. Pericat <contact@shortwavapp.com>",
   "repository": {
     "type": "git",
@@ -21,19 +18,29 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "expect.js": "^0.3.1",
-    "gulp": "^3.9.1",
-    "gulp-plumber": "^1.1.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^2.0.0",
-    "istanbul": "^0.4.4",
-    "mocha": "^3.0.2",
-    "pre-commit": "^1.1.3"
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-istanbul": "^0.12.2",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "chai": "^3.5.0",
+    "express": "^4.15.2",
+    "json-loader": "^0.5.4",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "pre-commit": "^1.2.2",
+    "sinon": "^2.0.0",
+    "webpack": "^1.14.0"
   },
   "dependencies": {
-    "bluebird": "^3.4.1",
-    "request": "^2.74.0",
-    "request-promise": "^4.1.1",
-    "xml2js": "^0.4.17"
+    "bluebird": "^3.5.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0",
+    "yql-node": "^0.2.1"
+  },
+  "engine": {
+    "node": ">=6.x"
   }
 }
