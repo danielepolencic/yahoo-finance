@@ -8,6 +8,8 @@
 
 A node wrapper to call the various Yahoo! Finance API's.
 
+> Some services have been deprecated by Yahoo! as of May 18th, 2017. Please see API docs below.
+
 ## Prerequisites
 
 This module requires a Yahoo! API key. [More info here](https://developer.yahoo.com/apps/create/).
