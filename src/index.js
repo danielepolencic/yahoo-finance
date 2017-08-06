@@ -135,10 +135,27 @@ export default class YahooFinanceAPI {
    * @method getIntradayChartData
    * @desc retrieves intraday data
    * @param {String} ticker
+   * @param {String} interval
+   * @param {Boolean} PrePostData
    * @return {Promise}
    */
-  getIntradayChartData(ticker) {
-    return Promise.reject(new Error('Deprecated'));
+  getIntradayChartData(ticker, interval = '2m', PrePostData = true) {
+    const query = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=1d&includePrePost=${PrePostData}&interval=${interval}&corsDomain=finance.yahoo.com&.tsrc=finance`;
+
+    return new Promise((resolve, reject) => {
+      rp(query)
+        .then(raw => {
+          try {
+            const data = JSON.parse(raw);
+            resolve(data);
+          } catch(e) {
+            reject({error: true, message: e.message});
+          }
+        })
+        .catch(err => {
+          reject({error: true, message: err.message});
+        });
+    });
   }
 
   /**

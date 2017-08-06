@@ -56,11 +56,27 @@ router.get('/news/headlines/:ticker', (req, res) => {
 
 /**
  * @desc Ticker search
- * @example http://localhost:3000/api/ticker/search/Apple%20Inc.
+ * @example http://localhost:3000/api/ticker/search/Apple%20Inc.?region=US&lang=en-US
  */
 router.get('/ticker/search/:searchterm', (req, res) => {
   api
-    .tickerSearch(req.params.searchterm)
+    .tickerSearch(req.params.searchterm, req.query.region, req.query.lang)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * NEW OR UPDATED IN v3
+ */
+
+/**
+ * @desc intrady chart data (UPDATED)
+ * @example http://localhost:3000/api/chart/intraday/AAPL?interval=2m&prePost=true
+ */
+router.get('/chart/intraday/:ticker', (req, res) => {
+  console.log('REQ', req.params, req.query);
+  api
+    .getIntradayChartData(req.params.ticker, req.query.interval, req.query.prePost)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });

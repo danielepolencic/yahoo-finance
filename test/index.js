@@ -216,4 +216,9 @@ describe('The Yahoo Finance Data module', () => {
         });
     });
   });
+
+  // v3 tests
+  describe('#getIntradayChartData', () => {});
+
+  describe('#getHistoricalData', () => {});
 });
