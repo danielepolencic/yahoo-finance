@@ -140,87 +140,6 @@ describe('The Yahoo Finance Data module', () => {
     });
   });
 
-  describe('The getDividendsHistory method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some dividend data', () => {
-      return API
-        .getDividendsHistory('aapl', '2016-01-01', '2016-12-31')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from yahoo.finance.dividendhistory where symbol = "AAPL" and startDate = "2016-01-01" and endDate = "2016-12-31"')).to.equal(true);
-        });
-    });
-  });
-
-  describe('The getHistoricalData method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some historical data', () => {
-      return API
-        .getHistoricalData('aapl', '2016-01-01', '2016-12-31')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from yahoo.finance.historicaldata where symbol = "AAPL" and startDate = "2016-01-01" and endDate = "2016-12-31"')).to.equal(true);
-        });
-    });
-  });
-
-  describe('The getSecuritiesBySectorIndex method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some securities belonging to a given sector', () => {
-      return API
-        .getSecuritiesBySectorIndex('812')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from yahoo.finance.industry where id="812"')).to.equal(true);
-        });
-    });
-  });
-
   describe('The getForexData method', () => {
     let API;
 
@@ -271,33 +190,6 @@ describe('The Yahoo Finance Data module', () => {
         .getHeadlinesByTicker('aapl')
         .then((res) => {
           expect(API.fetch.calledWith('select * from pm.finance.articles where symbol in ("AAPL")')).to.equal(true);
-        });
-    });
-  });
-
-  describe('The getIntradayChartData method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some intraday data', () => {
-      return API
-        .getIntradayChartData('aapl')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from pm.finance.graphs where symbol in ("AAPL")')).to.equal(true);
         });
     });
   });

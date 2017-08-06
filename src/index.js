@@ -97,43 +97,6 @@ export default class YahooFinanceAPI {
   }
 
   /**
-   * @method getDividendsHistory
-   * @desc retrieves dividend payout historical data
-   * @param {String} symbol
-   * @param {String} startDate
-   8 @param {String} endDate
-   * @return {Promise}
-   */
-  getDividendsHistory(symbol, startDate, endDate) {
-    const query = `select * from yahoo.finance.dividendhistory where symbol = "${symbol.toUpperCase()}" and startDate = "${startDate}" and endDate = "${endDate}"`;
-    return this.fetch(query);
-  }
-
-  /**
-   * @method getHistoricalData
-   * @desc retrieves historical data
-   * @param {String} symbol
-   * @param {String} startDate
-   8 @param {String} endDate
-   * @return {Promise}
-   */
-  getHistoricalData(symbol, startDate, endDate) {
-    const query = `select * from yahoo.finance.historicaldata where symbol = "${symbol.toUpperCase()}" and startDate = "${startDate}" and endDate = "${endDate}"`;
-    return this.fetch(query);
-  }
-
-  /**
-   * @method getSecuritiesBySectorIndex
-   * @desc retrieves a list of securities belonging to a given sector
-   * @param {String} sectorIndex
-   * @return {Promise}
-   */
-  getSecuritiesBySectorIndex(sectorIndex) {
-    const query = `select * from yahoo.finance.industry where id="${sectorIndex}"`;
-    return this.fetch(query);
-  }
-
-  /**
    * @method getForexData
    * @desc retrieves foreign exchange data
    * @param {String} exchanges
@@ -155,18 +118,7 @@ export default class YahooFinanceAPI {
     const query = `select * from pm.finance.articles where symbol in ("${ticker.toUpperCase()}")`;
     return this.fetch(query);
   }
-
-  /**
-   * @method getIntradayChartData
-   * @desc retrieves intraday data
-   * @param {String} ticker
-   * @return {Promise}
-   */
-  getIntradayChartData(ticker) {
-    const query = `select * from pm.finance.graphs where symbol in ("${ticker.toUpperCase()}")`;
-    return this.fetch(query);
-  }
-
+  
   /**
    * @method tickerSearch
    * @desc searches for matching tickers based on search term
