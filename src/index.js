@@ -97,6 +97,18 @@ export default class YahooFinanceAPI {
   }
 
   /**
+   * @method getHistoricalData
+   * @desc retrieves historical data
+   * @param {String} symbol
+   * @param {String} startDate
+   8 @param {String} endDate
+   * @return {Promise}
+   */
+  getHistoricalData(symbol, startDate, endDate) {
+    return Promise.reject(new Error('Deprecated'));
+  }
+
+  /**
    * @method getForexData
    * @desc retrieves foreign exchange data
    * @param {String} exchanges
@@ -118,7 +130,17 @@ export default class YahooFinanceAPI {
     const query = `select * from pm.finance.articles where symbol in ("${ticker.toUpperCase()}")`;
     return this.fetch(query);
   }
-  
+
+  /**
+   * @method getIntradayChartData
+   * @desc retrieves intraday data
+   * @param {String} ticker
+   * @return {Promise}
+   */
+  getIntradayChartData(ticker) {
+    return Promise.reject(new Error('Deprecated'));
+  }
+
   /**
    * @method tickerSearch
    * @desc searches for matching tickers based on search term
