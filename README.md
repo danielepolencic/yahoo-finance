@@ -63,52 +63,15 @@ api
 
 ### getHistoricalData(symbol, startDate, endDate)
 
-Retrieves historical data for a given security.
-
-| Param        | Type    | Desc  |
-| ------------ |:-------:| :---- |
-| symbol       | String  | the ticker |
-| start date   | String  | start date (2017-01-01) |
-| end date     | String  | end date (2017-01-01) |
-
-```js
-api
-  .getHistoricalData('AAPL', '2016-01-01', '2016-02-01')
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-```
+> Deprecated as of May 18th, 217
 
 ### getDividendsHistory(symbol, startDate, endDate)
 
-Retrieves dividends historical data for a given security.
-
-| Param        | Type    | Desc  |
-| ------------ |:-------:| :---- |
-| symbol       | String  | the ticker |
-| start date   | String  | start date (2016-01-01) |
-| end date     | String  | end date (2016-12-31) |
-
-```js
-api
-  .getDividendsHistory('AAPL', '2016-01-01', '2016-12-31')
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-```
+> Deprecated as of May 18th, 217
 
 ### getSecuritiesBySectorIndex(sectorIndex)
 
-Retrieves a list of securities for a given sector index.
-
-| Param        | Type    | Desc  |
-| ------------ |:-------:| :---- |
-| sectorIndex  | String  | the sector index |
-
-```js
-api
-  .getSecuritiesBySectorIndex(812)
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-```
+> Deprecated as of May 18th, 217
 
 ### getForexData(exchanges)
 
@@ -142,18 +105,7 @@ api
 
 ### getIntradayChartData(ticker)
 
-Retrieves intraday chart data for a given security.
-
-| Param        | Type    | Desc  |
-| ------------ |:-------:| :---- |
-| ticker       | String  | the ticker |
-
-```js
-api
-  .getIntradayChartData('AAPL')
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-```
+> Deprecated as of May 18th, 217
 
 ### tickerSearch(searchTerm, [region, lang])
 
