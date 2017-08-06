@@ -63,15 +63,15 @@ api
 
 ### getHistoricalData(symbol, startDate, endDate)
 
-> Deprecated as of May 18th, 217
+> Deprecated as of May 18th, 2017
 
 ### getDividendsHistory(symbol, startDate, endDate)
 
-> Deprecated as of May 18th, 217
+> Deprecated as of May 18th, 2017
 
 ### getSecuritiesBySectorIndex(sectorIndex)
 
-> Deprecated as of May 18th, 217
+> Deprecated as of May 18th, 2017
 
 ### getForexData(exchanges)
 
@@ -105,7 +105,7 @@ api
 
 ### getIntradayChartData(ticker)
 
-> Deprecated as of May 18th, 217
+> Deprecated as of May 18th, 2017
 
 ### tickerSearch(searchTerm, [region, lang])
 
