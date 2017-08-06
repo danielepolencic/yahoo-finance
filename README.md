@@ -65,7 +65,7 @@ api
 
 ### getHistoricalData(symbol, startDate, endDate)
 
-> Deprecated as of May 18th, 2017
+> UPDATED IN v3!
 
 ### getDividendsHistory(symbol, startDate, endDate)
 
@@ -105,9 +105,24 @@ api
   .catch(err => console.log(err));
 ```
 
-### getIntradayChartData(ticker)
+### getIntradayChartData(ticker, [interval, PrePostData])
 
-> Deprecated as of May 18th, 2017
+> UPDATED IN v3!
+
+Retrieves intraday chart data for a given security.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
+| interval     | String  | OPTIONAL time interval for data points (default: 2m) |
+| prePostData  | Boolean | OPTIONAL add pre/post data (default: true) |
+
+```js
+api
+  .getIntradayChartData('AAPL', '2m', true)
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
 
 ### tickerSearch(searchTerm, [region, lang])
 
@@ -121,7 +136,7 @@ Retrieves matches for a given search term.
 
 ```js
 api
-  .tickerSearch('Apple Inc.')
+  .tickerSearch('Apple Inc.', 'US', 'en-US')
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```

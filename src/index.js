@@ -136,11 +136,11 @@ export default class YahooFinanceAPI {
    * @desc retrieves intraday data
    * @param {String} ticker
    * @param {String} interval
-   * @param {Boolean} PrePostData
+   * @param {Boolean} prePostData
    * @return {Promise}
    */
-  getIntradayChartData(ticker, interval = '2m', PrePostData = true) {
-    const query = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=1d&includePrePost=${PrePostData}&interval=${interval}&corsDomain=finance.yahoo.com&.tsrc=finance`;
+  getIntradayChartData(ticker, interval = '2m', prePostData = true) {
+    const query = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=1d&includePrePost=${prePostData}&interval=${interval}&corsDomain=finance.yahoo.com&.tsrc=finance`;
 
     return new Promise((resolve, reject) => {
       rp(query)

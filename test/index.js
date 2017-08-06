@@ -218,7 +218,28 @@ describe('The Yahoo Finance Data module', () => {
   });
 
   // v3 tests
-  describe('#getIntradayChartData', () => {});
+  describe('#getIntradayChartData', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get intraday chart data for a given security', () => {
+      return API
+        .getIntradayChartData('AAPL')
+        .then((res) => {
+          expect(res).to.be.an('object');
+        });
+    });
+  });
 
   describe('#getHistoricalData', () => {});
 });
