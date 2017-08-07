@@ -113,6 +113,17 @@ router.get('/ticker/options/:ticker', (req, res) => {
    .catch(err => res.json(err));
 });
 
+/**
+ * @desc recommendations
+ * @example http://localhost:3000/api/ticker/recommendations/AAPL
+ */
+router.get('/ticker/recommendations/:ticker', (req, res) => {
+ api
+   .recommendations(req.params.ticker)
+   .then(data => res.json(data))
+   .catch(err => res.json(err));
+});
+
 app.use('/api', router);
 
 app.listen(3000);

@@ -85,14 +85,6 @@ api
   .catch(err => console.log(err));
 ```
 
-### getDividendsHistory(symbol, startDate, endDate)
-
-> Deprecated as of May 18th, 2017
-
-### getSecuritiesBySectorIndex(sectorIndex)
-
-> Deprecated as of May 18th, 2017
-
 ### getForexData(exchanges)
 
 Retrieves forex data for one or multiple currency pairs.
@@ -189,6 +181,23 @@ Retrieves option chain for a given ticker.
 ```js
 api
   .optionChain('AAPL')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+### recommendations(ticker)
+
+> NEW IN v3!
+
+Retrieves securities recommendations based on a given ticker.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
+
+```js
+api
+  .recommendations('AAPL')
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```

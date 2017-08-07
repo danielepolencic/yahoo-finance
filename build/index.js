@@ -283,6 +283,20 @@ var YahooFinanceAPI = function () {
       var query = 'https://query2.finance.yahoo.com/v7/finance/options/' + symbol + '?formatted=true&lang=en-US&region=US&corsDomain=finance.yahoo.com';
       return this.ajax(query);
     }
+
+    /**
+     * @method recommendations
+     * @desc Retrieves securities recommendations based on a given ticker
+     * @param {String} symbol
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'recommendations',
+    value: function recommendations(symbol) {
+      var query = 'https://query1.finance.yahoo.com/v6/finance/recommendationsbysymbol/' + symbol;
+      return this.ajax(query);
+    }
   }]);
 
   return YahooFinanceAPI;

@@ -54,8 +54,6 @@ describe('The Yahoo Finance Data module', () => {
         key: 'somekey',
         secret: 'somesecret'
       });
-
-
     });
 
     afterEach(() => {
@@ -332,9 +330,34 @@ describe('The Yahoo Finance Data module', () => {
       API = null;
     });
 
-    it('should get thd option chain for a given security', () => {
+    it('should get the option chain for a given security', () => {
       return API
         .optionChain('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  describe('#recommendations', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get securities recommendations for a given security', () => {
+      return API
+        .recommendations('AAPL')
         .then((res) => {
           expect(API.ajax.called).to.equal(true);
         });
