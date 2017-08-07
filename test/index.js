@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
 
-const YahooFinanceAPI = require('../src');
+const YahooFinanceAPI = require('../lib');
 
 describe('The Yahoo Finance Data module', () => {
   it('should export a function', () => {

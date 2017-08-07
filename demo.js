@@ -1,4 +1,4 @@
-const YahooFinanceAPI = require('./src');
+const YahooFinanceAPI = require('./lib');
 const express = require('express');
 const apiDetails = require('./api_key');
 

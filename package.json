@@ -2,7 +2,7 @@
   "name": "yahoo-finance-data",
   "version": "3.1.0",
   "description": "A node wrapper to call the various yahoo finance API's",
-  "main": "build/index.js",
+  "main": "lib/index.js",
   "global": false,
   "private": false,
   "scripts": {
