@@ -63,7 +63,7 @@ api
   .catch(err => console.log(err));
 ```
 
-### getHistoricalData(symbol, startDate, endDate)
+### getHistoricalData(symbol, [interval, range])
 
 > UPDATED IN v3!
 
