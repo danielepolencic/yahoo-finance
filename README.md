@@ -8,6 +8,8 @@
 
 A node wrapper to call the various Yahoo! Finance API's.
 
+> Some services have been deprecated by Yahoo! as of May 18th, 2017. Please see API docs below.
+
 ## Prerequisites
 
 This module requires a Yahoo! API key. [More info here](https://developer.yahoo.com/apps/create/).
@@ -63,49 +65,22 @@ api
 
 ### getHistoricalData(symbol, startDate, endDate)
 
+> UPDATED IN v3!
+
 Retrieves historical data for a given security.
 
 | Param        | Type    | Desc  |
 | ------------ |:-------:| :---- |
 | symbol       | String  | the ticker |
-| start date   | String  | start date (2017-01-01) |
-| end date     | String  | end date (2017-01-01) |
+| interval     | String  | OPTIONAL interval between data points (default: 1d) |
+| range        | String  | OPTIONAL data range (default: 1y) |
+
+*Valid ranges*:
+`["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]`
 
 ```js
 api
-  .getHistoricalData('AAPL', '2016-01-01', '2016-02-01')
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-```
-
-### getDividendsHistory(symbol, startDate, endDate)
-
-Retrieves dividends historical data for a given security.
-
-| Param        | Type    | Desc  |
-| ------------ |:-------:| :---- |
-| symbol       | String  | the ticker |
-| start date   | String  | start date (2016-01-01) |
-| end date     | String  | end date (2016-12-31) |
-
-```js
-api
-  .getDividendsHistory('AAPL', '2016-01-01', '2016-12-31')
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-```
-
-### getSecuritiesBySectorIndex(sectorIndex)
-
-Retrieves a list of securities for a given sector index.
-
-| Param        | Type    | Desc  |
-| ------------ |:-------:| :---- |
-| sectorIndex  | String  | the sector index |
-
-```js
-api
-  .getSecuritiesBySectorIndex(812)
+  .getHistoricalData('AAPL', '1d', '1y')
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```
@@ -140,17 +115,21 @@ api
   .catch(err => console.log(err));
 ```
 
-### getIntradayChartData(ticker)
+### getIntradayChartData(ticker, [interval, prePostData])
+
+> UPDATED IN v3!
 
 Retrieves intraday chart data for a given security.
 
 | Param        | Type    | Desc  |
 | ------------ |:-------:| :---- |
 | ticker       | String  | the ticker |
+| interval     | String  | OPTIONAL time interval for data points (default: 2m) |
+| prePostData  | Boolean | OPTIONAL add pre/post data (default: true) |
 
 ```js
 api
-  .getIntradayChartData('AAPL')
+  .getIntradayChartData('AAPL', '2m', true)
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```
@@ -167,7 +146,58 @@ Retrieves matches for a given search term.
 
 ```js
 api
-  .tickerSearch('Apple Inc.')
+  .tickerSearch('Apple Inc.', 'US', 'en-US')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+### quoteSummary(ticker)
+
+> NEW IN v3!
+
+Retrieves company information based on its ticker.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
+
+```js
+api
+  .quoteSummary('AAPL')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+### optionChain(ticker)
+
+> NEW IN v3!
+
+Retrieves option chain for a given ticker.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
+
+```js
+api
+  .optionChain('AAPL')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+### recommendations(ticker)
+
+> NEW IN v3!
+
+Retrieves securities recommendations based on a given ticker.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
+
+```js
+api
+  .recommendations('AAPL')
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```

@@ -22,6 +22,8 @@ export default class YahooFinanceAPI {
       env: 'store://datatables.org/alltableswithkeys',
       diagnostics: true
     });
+
+    this.xhr = rp;
   }
 
   /**
@@ -48,6 +50,29 @@ export default class YahooFinanceAPI {
           reject({error: true, message: e.message});
         }
       });
+    });
+  }
+
+  /**
+   * @method ajax
+   * @desc executes an AJAX request
+   * @param {String} query
+   * @return {Promise}
+   */
+  ajax(query) {
+    return new Promise((resolve, reject) => {
+      this.xhr(query)
+        .then(raw => {
+          try {
+            const data = JSON.parse(raw);
+            resolve(data);
+          } catch(e) {
+            reject({error: true, message: e.message});
+          }
+        })
+        .catch(err => {
+          reject({error: true, message: err.message});
+        });
     });
   }
 
@@ -97,40 +122,16 @@ export default class YahooFinanceAPI {
   }
 
   /**
-   * @method getDividendsHistory
-   * @desc retrieves dividend payout historical data
-   * @param {String} symbol
-   * @param {String} startDate
-   8 @param {String} endDate
-   * @return {Promise}
-   */
-  getDividendsHistory(symbol, startDate, endDate) {
-    const query = `select * from yahoo.finance.dividendhistory where symbol = "${symbol.toUpperCase()}" and startDate = "${startDate}" and endDate = "${endDate}"`;
-    return this.fetch(query);
-  }
-
-  /**
    * @method getHistoricalData
    * @desc retrieves historical data
    * @param {String} symbol
-   * @param {String} startDate
-   8 @param {String} endDate
+   * @param {String} interval
+   * @param {String} range
    * @return {Promise}
    */
-  getHistoricalData(symbol, startDate, endDate) {
-    const query = `select * from yahoo.finance.historicaldata where symbol = "${symbol.toUpperCase()}" and startDate = "${startDate}" and endDate = "${endDate}"`;
-    return this.fetch(query);
-  }
-
-  /**
-   * @method getSecuritiesBySectorIndex
-   * @desc retrieves a list of securities belonging to a given sector
-   * @param {String} sectorIndex
-   * @return {Promise}
-   */
-  getSecuritiesBySectorIndex(sectorIndex) {
-    const query = `select * from yahoo.finance.industry where id="${sectorIndex}"`;
-    return this.fetch(query);
+  getHistoricalData(symbol, interval = '1d', range = '1y') {
+    const query = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?formatted=true&lang=en-US&region=US&interval=${interval}&events=div%7Csplit&range=${range}&corsDomain=finance.yahoo.com`;
+    return this.ajax(query);
   }
 
   /**
@@ -160,11 +161,13 @@ export default class YahooFinanceAPI {
    * @method getIntradayChartData
    * @desc retrieves intraday data
    * @param {String} ticker
+   * @param {String} interval
+   * @param {Boolean} prePostData
    * @return {Promise}
    */
-  getIntradayChartData(ticker) {
-    const query = `select * from pm.finance.graphs where symbol in ("${ticker.toUpperCase()}")`;
-    return this.fetch(query);
+  getIntradayChartData(ticker, interval = '2m', prePostData = true) {
+    const query = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=1d&includePrePost=${prePostData}&interval=${interval}&corsDomain=finance.yahoo.com&.tsrc=finance`;
+    return this.ajax(query);
   }
 
   /**
@@ -177,19 +180,39 @@ export default class YahooFinanceAPI {
    */
   tickerSearch(searchTerm, region = 'US', lang = 'en-US') {
     const query = `http://d.yimg.com/aq/autoc?query=${encodeURIComponent(searchTerm)}&region=${region}&lang=${lang}`;
-    return new Promise((resolve, reject) => {
-      rp(query)
-        .then(raw => {
-          try {
-            const data = JSON.parse(raw);
-            resolve(data);
-          } catch(e) {
-            reject({error: true, message: e.message});
-          }
-        })
-        .catch(err => {
-          reject({error: true, message: err.message});
-        });
-    });
+    return this.ajax(query);
+  }
+
+  /**
+   * @method quoteSummary
+   * @desc Retrieves company information based on its ticker
+   * @param {String} symbol
+   * @return {Promise}
+   */
+  quoteSummary(symbol) {
+    const query = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${symbol}?formatted=true&lang=en-US&region=US&modules=assetProfile%2CsecFilings&corsDomain=finance.yahoo.com`;
+    return this.ajax(query);
+  }
+
+  /**
+   * @method optionChain
+   * @desc Retrieves option chain for a given ticker
+   * @param {String} symbol
+   * @return {Promise}
+   */
+  optionChain(symbol) {
+    const query = `https://query2.finance.yahoo.com/v7/finance/options/${symbol}?formatted=true&lang=en-US&region=US&corsDomain=finance.yahoo.com`;
+    return this.ajax(query);
+  }
+
+  /**
+   * @method recommendations
+   * @desc Retrieves securities recommendations based on a given ticker
+   * @param {String} symbol
+   * @return {Promise}
+   */
+  recommendations(symbol) {
+    const query = `https://query1.finance.yahoo.com/v6/finance/recommendationsbysymbol/${symbol}`;
+    return this.ajax(query);
   }
 }

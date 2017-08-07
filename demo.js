@@ -33,43 +33,6 @@ router.get('/quote/realtime/:tickers', (req, res) => {
 });
 
 /**
- * @desc historical data
- * @example http://localhost:3000/api/quote/historical/yhoo/2017-01-01/2017-02-01
- */
-router.get('/quote/historical/:ticker/:start/:end', (req, res) => {
-  let {ticker, start, end} = req.params;
-
-  api
-    .getHistoricalData(ticker, start, end)
-    .then(data => res.json(data))
-    .catch(err => res.json(err));
-});
-
-/**
- * @desc Dividends history
- * @example http://localhost:3000/api/dividends/history/aapl/2016-01-01/2016-12-31
- */
-router.get('/dividends/history/:ticker/:start/:end', (req, res) => {
-  let {ticker, start, end} = req.params;
-
-  api
-    .getDividendsHistory(ticker, start, end)
-    .then(data => res.json(data))
-    .catch(err => res.json(err));
-});
-
-/**
- * @desc List of securities by sector id
- * @example http://localhost:3000/api/securities/bysector/812
- */
-router.get('/securities/bysector/:sectorid', (req, res) => {
-  api
-    .getSecuritiesBySectorIndex(req.params.sectorid)
-    .then(data => res.json(data))
-    .catch(err => res.json(err));
-});
-
-/**
  * @desc Forex data
  * @example http://localhost:3000/api/forex/eurusd,gbpusd,cadusd
  */
@@ -92,25 +55,73 @@ router.get('/news/headlines/:ticker', (req, res) => {
 });
 
 /**
- * @desc Chart data
- * @example http://localhost:3000/api/chart/intraday/aapl
+ * @desc Ticker search
+ * @example http://localhost:3000/api/ticker/search/Apple%20Inc.?region=US&lang=en-US
  */
-router.get('/chart/intraday/:ticker', (req, res) => {
+router.get('/ticker/search/:searchterm', (req, res) => {
   api
-    .getIntradayChartData(req.params.ticker)
+    .tickerSearch(req.params.searchterm, req.query.region, req.query.lang)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });
 
 /**
- * @desc Ticker search
- * @example http://localhost:3000/api/ticker/search/Apple%20Inc.
+ * NEW OR UPDATED IN v3
  */
-router.get('/ticker/search/:searchterm', (req, res) => {
+
+/**
+ * @desc intraday chart data (UPDATED)
+ * @example http://localhost:3000/api/chart/intraday/AAPL?interval=2m&prePost=true
+ */
+router.get('/chart/intraday/:ticker', (req, res) => {
   api
-    .tickerSearch(req.params.searchterm)
+    .getIntradayChartData(req.params.ticker, req.query.interval, req.query.prePost)
     .then(data => res.json(data))
     .catch(err => res.json(err));
+});
+
+/**
+ * @desc historical chart data (UPDATED)
+ * @example http://localhost:3000/api/chart/historical/AAPL?interval=1d&range=1y
+ */
+router.get('/chart/historical/:ticker', (req, res) => {
+  api
+    .getHistoricalData(req.params.ticker, req.query.interval, req.query.range)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc company info
+ * @example http://localhost:3000/api/ticker/info/AAPL
+ */
+router.get('/ticker/info/:ticker', (req, res) => {
+ api
+   .quoteSummary(req.params.ticker)
+   .then(data => res.json(data))
+   .catch(err => res.json(err));
+});
+
+/**
+ * @desc option chain
+ * @example http://localhost:3000/api/ticker/options/AAPL
+ */
+router.get('/ticker/options/:ticker', (req, res) => {
+ api
+   .optionChain(req.params.ticker)
+   .then(data => res.json(data))
+   .catch(err => res.json(err));
+});
+
+/**
+ * @desc recommendations
+ * @example http://localhost:3000/api/ticker/recommendations/AAPL
+ */
+router.get('/ticker/recommendations/:ticker', (req, res) => {
+ api
+   .recommendations(req.params.ticker)
+   .then(data => res.json(data))
+   .catch(err => res.json(err));
 });
 
 app.use('/api', router);

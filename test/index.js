@@ -46,6 +46,33 @@ describe('The Yahoo Finance Data module', () => {
     });
   });
 
+  describe('#ajax', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should make an ajax call', () => {
+      const url = 'https://restcountries.eu/rest/v2/all';
+
+      API.xhr = sinon.stub().returns(Promise.resolve(true));
+
+      return API
+        .ajax(url)
+        .then((res) => {
+          expect(API.xhr.called).to.equal(true);
+        });
+    });
+  });
+
   describe('The formatSymbolList method', () => {
     let API;
 
@@ -95,9 +122,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
+      API.fetch = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -122,9 +147,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
+      API.fetch = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -140,87 +163,6 @@ describe('The Yahoo Finance Data module', () => {
     });
   });
 
-  describe('The getDividendsHistory method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some dividend data', () => {
-      return API
-        .getDividendsHistory('aapl', '2016-01-01', '2016-12-31')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from yahoo.finance.dividendhistory where symbol = "AAPL" and startDate = "2016-01-01" and endDate = "2016-12-31"')).to.equal(true);
-        });
-    });
-  });
-
-  describe('The getHistoricalData method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some historical data', () => {
-      return API
-        .getHistoricalData('aapl', '2016-01-01', '2016-12-31')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from yahoo.finance.historicaldata where symbol = "AAPL" and startDate = "2016-01-01" and endDate = "2016-12-31"')).to.equal(true);
-        });
-    });
-  });
-
-  describe('The getSecuritiesBySectorIndex method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some securities belonging to a given sector', () => {
-      return API
-        .getSecuritiesBySectorIndex('812')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from yahoo.finance.industry where id="812"')).to.equal(true);
-        });
-    });
-  });
-
   describe('The getForexData method', () => {
     let API;
 
@@ -230,9 +172,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
+      API.fetch = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -257,9 +197,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
+      API.fetch = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -275,33 +213,6 @@ describe('The Yahoo Finance Data module', () => {
     });
   });
 
-  describe('The getIntradayChartData method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some intraday data', () => {
-      return API
-        .getIntradayChartData('aapl')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from pm.finance.graphs where symbol in ("AAPL")')).to.equal(true);
-        });
-    });
-  });
-
   describe('The tickerSearch method', () => {
     let API;
 
@@ -310,6 +221,8 @@ describe('The Yahoo Finance Data module', () => {
         key: 'somekey',
         secret: 'somesecret'
       });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -320,7 +233,133 @@ describe('The Yahoo Finance Data module', () => {
       return API
         .tickerSearch('Apple Inc.')
         .then((res) => {
-          expect(res).to.be.an('object');
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  // v3 tests
+  describe('#getIntradayChartData', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get intraday chart data for a given security', () => {
+      return API
+        .getIntradayChartData('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  describe('#getHistoricalData', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get historical chart data for a given security', () => {
+      return API
+        .getHistoricalData('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  describe('#quoteSummary', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get company info for a given security', () => {
+      return API
+        .quoteSummary('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  describe('#optionChain', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get the option chain for a given security', () => {
+      return API
+        .optionChain('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  describe('#recommendations', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get securities recommendations for a given security', () => {
+      return API
+        .recommendations('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
         });
     });
   });
