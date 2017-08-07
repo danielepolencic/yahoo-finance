@@ -123,7 +123,7 @@ api
   .catch(err => console.log(err));
 ```
 
-### getIntradayChartData(ticker, [interval, PrePostData])
+### getIntradayChartData(ticker, [interval, prePostData])
 
 > UPDATED IN v3!
 
@@ -155,6 +155,23 @@ Retrieves matches for a given search term.
 ```js
 api
   .tickerSearch('Apple Inc.', 'US', 'en-US')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+### quoteSummary(ticker)
+
+> NEW IN v3!
+
+Retrieves company information based on its ticker.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
+
+```js
+api
+  .quoteSummary('AAPL')
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```

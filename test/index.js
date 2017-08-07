@@ -290,4 +290,29 @@ describe('The Yahoo Finance Data module', () => {
         });
     });
   });
+
+  describe('#quoteSummary', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get company info for a given security', () => {
+      return API
+        .quoteSummary('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
 });

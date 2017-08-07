@@ -91,6 +91,17 @@ router.get('/chart/historical/:ticker', (req, res) => {
     .catch(err => res.json(err));
 });
 
+/**
+ * @desc company info
+ * @example http://localhost:3000/api/ticker/info/AAPL
+ */
+router.get('/ticker/info/:ticker', (req, res) => {
+ api
+   .quoteSummary(req.params.ticker)
+   .then(data => res.json(data))
+   .catch(err => res.json(err));
+});
+
 app.use('/api', router);
 
 app.listen(3000);

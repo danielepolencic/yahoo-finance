@@ -182,4 +182,15 @@ export default class YahooFinanceAPI {
     const query = `http://d.yimg.com/aq/autoc?query=${encodeURIComponent(searchTerm)}&region=${region}&lang=${lang}`;
     return this.ajax(query);
   }
+
+  /**
+   * @method quoteSummary
+   * @desc Retrieves company information based on its ticker
+   * @param {String} symbol
+   * @return {Promise}
+   */
+  quoteSummary(symbol) {
+    const query = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${symbol}?formatted=true&lang=en-US&region=US&modules=assetProfile%2CsecFilings&corsDomain=finance.yahoo.com`;
+    return this.ajax(query);
+  }
 }
