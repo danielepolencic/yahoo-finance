@@ -102,6 +102,17 @@ router.get('/ticker/info/:ticker', (req, res) => {
    .catch(err => res.json(err));
 });
 
+/**
+ * @desc option chain
+ * @example http://localhost:3000/api/ticker/options/AAPL
+ */
+router.get('/ticker/options/:ticker', (req, res) => {
+ api
+   .optionChain(req.params.ticker)
+   .then(data => res.json(data))
+   .catch(err => res.json(err));
+});
+
 app.use('/api', router);
 
 app.listen(3000);

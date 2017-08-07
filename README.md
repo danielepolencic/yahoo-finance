@@ -175,3 +175,20 @@ api
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```
+
+### optionChain(ticker)
+
+> NEW IN v3!
+
+Retrieves option chain for a given ticker.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| ticker       | String  | the ticker |
+
+```js
+api
+  .optionChain('AAPL')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```

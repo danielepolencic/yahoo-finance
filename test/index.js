@@ -315,4 +315,29 @@ describe('The Yahoo Finance Data module', () => {
         });
     });
   });
+
+  describe('#optionChain', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get thd option chain for a given security', () => {
+      return API
+        .optionChain('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
 });

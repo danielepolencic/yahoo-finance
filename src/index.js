@@ -193,4 +193,15 @@ export default class YahooFinanceAPI {
     const query = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${symbol}?formatted=true&lang=en-US&region=US&modules=assetProfile%2CsecFilings&corsDomain=finance.yahoo.com`;
     return this.ajax(query);
   }
+
+  /**
+   * @method optionChain
+   * @desc Retrieves option chain for a given ticker
+   * @param {String} symbol
+   * @return {Promise}
+   */
+  optionChain(symbol) {
+    const query = `https://query2.finance.yahoo.com/v7/finance/options/${symbol}?formatted=true&lang=en-US&region=US&corsDomain=finance.yahoo.com`;
+    return this.ajax(query);
+  }
 }

@@ -46,6 +46,8 @@ var YahooFinanceAPI = function () {
       env: 'store://datatables.org/alltableswithkeys',
       diagnostics: true
     });
+
+    this.xhr = _requestPromise2.default;
   }
 
   /**
@@ -77,6 +79,32 @@ var YahooFinanceAPI = function () {
           } catch (e) {
             reject({ error: true, message: e.message });
           }
+        });
+      });
+    }
+
+    /**
+     * @method ajax
+     * @desc executes an AJAX request
+     * @param {String} query
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'ajax',
+    value: function ajax(query) {
+      var _this2 = this;
+
+      return new _bluebird2.default(function (resolve, reject) {
+        _this2.xhr(query).then(function (raw) {
+          try {
+            var data = JSON.parse(raw);
+            resolve(data);
+          } catch (e) {
+            reject({ error: true, message: e.message });
+          }
+        }).catch(function (err) {
+          reject({ error: true, message: err.message });
         });
       });
     }
@@ -143,6 +171,25 @@ var YahooFinanceAPI = function () {
     }
 
     /**
+     * @method getHistoricalData
+     * @desc retrieves historical data
+     * @param {String} symbol
+     * @param {String} interval
+     * @param {String} range
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'getHistoricalData',
+    value: function getHistoricalData(symbol) {
+      var interval = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '1d';
+      var range = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '1y';
+
+      var query = 'https://query1.finance.yahoo.com/v8/finance/chart/' + symbol + '?formatted=true&lang=en-US&region=US&interval=' + interval + '&events=div%7Csplit&range=' + range + '&corsDomain=finance.yahoo.com';
+      return this.ajax(query);
+    }
+
+    /**
      * @method getForexData
      * @desc retrieves foreign exchange data
      * @param {String} exchanges
@@ -172,6 +219,25 @@ var YahooFinanceAPI = function () {
     }
 
     /**
+     * @method getIntradayChartData
+     * @desc retrieves intraday data
+     * @param {String} ticker
+     * @param {String} interval
+     * @param {Boolean} prePostData
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'getIntradayChartData',
+    value: function getIntradayChartData(ticker) {
+      var interval = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '2m';
+      var prePostData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+      var query = 'https://query1.finance.yahoo.com/v8/finance/chart/' + ticker + '?range=1d&includePrePost=' + prePostData + '&interval=' + interval + '&corsDomain=finance.yahoo.com&.tsrc=finance';
+      return this.ajax(query);
+    }
+
+    /**
      * @method tickerSearch
      * @desc searches for matching tickers based on search term
      * @param {String} searchTerm
@@ -187,18 +253,35 @@ var YahooFinanceAPI = function () {
       var lang = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
 
       var query = 'http://d.yimg.com/aq/autoc?query=' + encodeURIComponent(searchTerm) + '&region=' + region + '&lang=' + lang;
-      return new _bluebird2.default(function (resolve, reject) {
-        (0, _requestPromise2.default)(query).then(function (raw) {
-          try {
-            var data = JSON.parse(raw);
-            resolve(data);
-          } catch (e) {
-            reject({ error: true, message: e.message });
-          }
-        }).catch(function (err) {
-          reject({ error: true, message: err.message });
-        });
-      });
+      return this.ajax(query);
+    }
+
+    /**
+     * @method quoteSummary
+     * @desc Retrieves company information based on its ticker
+     * @param {String} symbol
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'quoteSummary',
+    value: function quoteSummary(symbol) {
+      var query = 'https://query2.finance.yahoo.com/v10/finance/quoteSummary/' + symbol + '?formatted=true&lang=en-US&region=US&modules=assetProfile%2CsecFilings&corsDomain=finance.yahoo.com';
+      return this.ajax(query);
+    }
+
+    /**
+     * @method optionChain
+     * @desc Retrieves option chain for a given ticker
+     * @param {String} symbol
+     * @return {Promise}
+     */
+
+  }, {
+    key: 'optionChain',
+    value: function optionChain(symbol) {
+      var query = 'https://query2.finance.yahoo.com/v7/finance/options/' + symbol + '?formatted=true&lang=en-US&region=US&corsDomain=finance.yahoo.com';
+      return this.ajax(query);
     }
   }]);
 
