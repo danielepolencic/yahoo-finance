@@ -1,11 +1,11 @@
-import yql from 'yql-node';
-import rp from 'request-promise';
-import Promise from 'bluebird';
+const yql = require('yql-node');
+const rp = require('request-promise');
+const Promise = require('bluebird');
 
 /**
  * @class YahooFinanceAPI
  */
-export default class YahooFinanceAPI {
+class YahooFinanceAPI {
   /**
    * @constructor
    * @param {Object} apiDetails
@@ -216,3 +216,5 @@ export default class YahooFinanceAPI {
     return this.ajax(query);
   }
 }
+
+module.exports = YahooFinanceAPI;

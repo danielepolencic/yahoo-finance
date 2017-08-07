@@ -1,7 +1,7 @@
-import {expect} from 'chai';
-import sinon from 'sinon';
+const expect = require('chai').expect;
+const sinon = require('sinon');
 
-import YahooFinanceAPI from '../src';
+const YahooFinanceAPI = require('../src');
 
 describe('The Yahoo Finance Data module', () => {
   it('should export a function', () => {

@@ -23,7 +23,7 @@ npm install yahoo-finance-data
 ## Getting started
 
 ```js
-import YahooFinanceAPI from 'yahoo-finance-data';
+const YahooFinanceAPI = require('yahoo-finance-data');
 
 const api = new YahooFinanceAPI({
   key: 'mylongyahooapikey',

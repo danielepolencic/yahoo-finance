@@ -1,6 +1,6 @@
-import YahooFinanceAPI from './src';
-import express from 'express';
-import apiDetails from './api_key';
+const YahooFinanceAPI = require('./src');
+const express = require('express');
+const apiDetails = require('./api_key');
 
 const app = express();
 const api = new YahooFinanceAPI(apiDetails);
