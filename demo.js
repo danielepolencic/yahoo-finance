@@ -70,13 +70,23 @@ router.get('/ticker/search/:searchterm', (req, res) => {
  */
 
 /**
- * @desc intrady chart data (UPDATED)
+ * @desc intraday chart data (UPDATED)
  * @example http://localhost:3000/api/chart/intraday/AAPL?interval=2m&prePost=true
  */
 router.get('/chart/intraday/:ticker', (req, res) => {
-  console.log('REQ', req.params, req.query);
   api
     .getIntradayChartData(req.params.ticker, req.query.interval, req.query.prePost)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc historical chart data (UPDATED)
+ * @example http://localhost:3000/api/chart/historical/AAPL?interval=1d&range=1y
+ */
+router.get('/chart/historical/:ticker', (req, res) => {
+  api
+    .getHistoricalData(req.params.ticker, req.query.interval, req.query.range)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });

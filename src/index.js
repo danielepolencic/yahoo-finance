@@ -22,6 +22,8 @@ export default class YahooFinanceAPI {
       env: 'store://datatables.org/alltableswithkeys',
       diagnostics: true
     });
+
+    this.xhr = rp;
   }
 
   /**
@@ -48,6 +50,29 @@ export default class YahooFinanceAPI {
           reject({error: true, message: e.message});
         }
       });
+    });
+  }
+
+  /**
+   * @method ajax
+   * @desc executes an AJAX request
+   * @param {String} query
+   * @return {Promise}
+   */
+  ajax(query) {
+    return new Promise((resolve, reject) => {
+      this.xhr(query)
+        .then(raw => {
+          try {
+            const data = JSON.parse(raw);
+            resolve(data);
+          } catch(e) {
+            reject({error: true, message: e.message});
+          }
+        })
+        .catch(err => {
+          reject({error: true, message: err.message});
+        });
     });
   }
 
@@ -100,12 +125,13 @@ export default class YahooFinanceAPI {
    * @method getHistoricalData
    * @desc retrieves historical data
    * @param {String} symbol
-   * @param {String} startDate
-   8 @param {String} endDate
+   * @param {String} interval
+   * @param {String} range
    * @return {Promise}
    */
-  getHistoricalData(symbol, startDate, endDate) {
-    return Promise.reject(new Error('Deprecated'));
+  getHistoricalData(symbol, interval = '1d', range = '1y') {
+    const query = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?formatted=true&lang=en-US&region=US&interval=${interval}&events=div%7Csplit&range=${range}&corsDomain=finance.yahoo.com`;
+    return this.ajax(query);
   }
 
   /**
@@ -141,21 +167,7 @@ export default class YahooFinanceAPI {
    */
   getIntradayChartData(ticker, interval = '2m', prePostData = true) {
     const query = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=1d&includePrePost=${prePostData}&interval=${interval}&corsDomain=finance.yahoo.com&.tsrc=finance`;
-
-    return new Promise((resolve, reject) => {
-      rp(query)
-        .then(raw => {
-          try {
-            const data = JSON.parse(raw);
-            resolve(data);
-          } catch(e) {
-            reject({error: true, message: e.message});
-          }
-        })
-        .catch(err => {
-          reject({error: true, message: err.message});
-        });
-    });
+    return this.ajax(query);
   }
 
   /**
@@ -168,19 +180,6 @@ export default class YahooFinanceAPI {
    */
   tickerSearch(searchTerm, region = 'US', lang = 'en-US') {
     const query = `http://d.yimg.com/aq/autoc?query=${encodeURIComponent(searchTerm)}&region=${region}&lang=${lang}`;
-    return new Promise((resolve, reject) => {
-      rp(query)
-        .then(raw => {
-          try {
-            const data = JSON.parse(raw);
-            resolve(data);
-          } catch(e) {
-            reject({error: true, message: e.message});
-          }
-        })
-        .catch(err => {
-          reject({error: true, message: err.message});
-        });
-    });
+    return this.ajax(query);
   }
 }

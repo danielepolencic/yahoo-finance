@@ -67,6 +67,24 @@ api
 
 > UPDATED IN v3!
 
+Retrieves historical data for a given security.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| symbol       | String  | the ticker |
+| interval     | String  | OPTIONAL interval between data points (default: 1d) |
+| range        | String  | OPTIONAL data range (default: 1y) |
+
+*Valid ranges*:
+`["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"]`
+
+```js
+api
+  .getHistoricalData('AAPL', '1d', '1y')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
 ### getDividendsHistory(symbol, startDate, endDate)
 
 > Deprecated as of May 18th, 2017

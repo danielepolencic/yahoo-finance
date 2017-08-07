@@ -46,6 +46,35 @@ describe('The Yahoo Finance Data module', () => {
     });
   });
 
+  describe('#ajax', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should make an ajax call', () => {
+      const url = 'https://restcountries.eu/rest/v2/all';
+
+      API.xhr = sinon.stub().returns(Promise.resolve(true));
+
+      return API
+        .ajax(url)
+        .then((res) => {
+          expect(API.xhr.called).to.equal(true);
+        });
+    });
+  });
+
   describe('The formatSymbolList method', () => {
     let API;
 
@@ -95,9 +124,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
+      API.fetch = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -122,9 +149,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
+      API.fetch = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -149,9 +174,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
+      API.fetch = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -176,9 +199,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(new Promise((resolve, reject) => {
-        resolve(true);
-      }));
+      API.fetch = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -202,6 +223,8 @@ describe('The Yahoo Finance Data module', () => {
         key: 'somekey',
         secret: 'somesecret'
       });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -212,7 +235,7 @@ describe('The Yahoo Finance Data module', () => {
       return API
         .tickerSearch('Apple Inc.')
         .then((res) => {
-          expect(res).to.be.an('object');
+          expect(API.ajax.called).to.equal(true);
         });
     });
   });
@@ -226,6 +249,8 @@ describe('The Yahoo Finance Data module', () => {
         key: 'somekey',
         secret: 'somesecret'
       });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -236,10 +261,33 @@ describe('The Yahoo Finance Data module', () => {
       return API
         .getIntradayChartData('AAPL')
         .then((res) => {
-          expect(res).to.be.an('object');
+          expect(API.ajax.called).to.equal(true);
         });
     });
   });
 
-  describe('#getHistoricalData', () => {});
+  describe('#getHistoricalData', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get historical chart data for a given security', () => {
+      return API
+        .getHistoricalData('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
 });
