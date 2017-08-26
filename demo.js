@@ -1,13 +1,14 @@
-import YahooFinanceAPI from './src';
-import express from 'express';
-import apiDetails from './api_key';
+const YahooFinanceAPI = require('./lib');
+const express = require('express');
+const open = require('open');
+const apiDetails = require('./api_key');
 
 const app = express();
 const api = new YahooFinanceAPI(apiDetails);
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  res.json({status: 'ok'});
+  res.json({status: 'ok', version: '3.1.0'});
 });
 
 /**
@@ -124,6 +125,40 @@ router.get('/ticker/recommendations/:ticker', (req, res) => {
    .catch(err => res.json(err));
 });
 
+/**
+ * @desc futures
+ * @example http://localhost:3000/api/markets/futures?market=NQ=F
+ *
+ * S&P 500: ES=F
+ * NASDAQ: NQ=F
+ * DOW JONES: YM=F
+ */
+router.get('/markets/futures', (req, res) => {
+  api
+    .futures(req.query.market)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
+/**
+ * @desc futures
+ * @example http://localhost:3000/api/markets/commodities?commodities=GC=F,SI=F,PL=F,HG=F
+ */
+router.get('/markets/commodities', (req, res) => {
+  api
+    .commodities(req.query.commodities)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
+});
+
 app.use('/api', router);
 
-app.listen(3000);
+// Demo HTML page at : http://localhost:3000/
+app.get('/', (req, res) => res.sendFile(__dirname + '/demo.html'));
+
+app.listen(3000, () => {
+  console.log('Server started on http://localhost:3000/');
+  console.log('API available at http://localhost:3000/api');
+
+  open('http://localhost:3000/');
+});

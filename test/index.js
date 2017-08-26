@@ -1,7 +1,7 @@
-import {expect} from 'chai';
-import sinon from 'sinon';
+const expect = require('chai').expect;
+const sinon = require('sinon');
 
-import YahooFinanceAPI from '../src';
+const YahooFinanceAPI = require('../lib');
 
 describe('The Yahoo Finance Data module', () => {
   it('should export a function', () => {
@@ -358,6 +358,56 @@ describe('The Yahoo Finance Data module', () => {
     it('should get securities recommendations for a given security', () => {
       return API
         .recommendations('AAPL')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  describe('#futures', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get markets futures data', () => {
+      return API
+        .futures('NG=F')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  describe('#commodities', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get futures data for a list of commodities', () => {
+      return API
+        .commodities('GC=F')
         .then((res) => {
           expect(API.ajax.called).to.equal(true);
         });
