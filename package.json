@@ -6,7 +6,7 @@
   "global": false,
   "private": false,
   "scripts": {
-    "start": "nodemon demo",
+    "start": "nodemon ./demo.js",
     "test": "node_modules/.bin/_mocha"
   },
   "pre-commit": [
