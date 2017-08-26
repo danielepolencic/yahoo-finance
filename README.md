@@ -202,7 +202,7 @@ api
   .catch(err => console.log(err));
 ```
 
-### futures
+### futures(market, [range, interval, prePostData])
 
 > NEW in v3.1!
 
@@ -222,7 +222,7 @@ api
   .catch(err => console.log(err));
 ```
 
-### commodities
+### commodities(commodities, [range, interval, prePostData])
 
 > NEW in v3.1!
 
