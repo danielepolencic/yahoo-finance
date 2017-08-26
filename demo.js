@@ -1,5 +1,6 @@
 const YahooFinanceAPI = require('./lib');
 const express = require('express');
+const open = require('open');
 const apiDetails = require('./api_key');
 
 const app = express();
@@ -7,7 +8,7 @@ const api = new YahooFinanceAPI(apiDetails);
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  res.json({status: 'ok'});
+  res.json({status: 'ok', version: '3.1.0'});
 });
 
 /**
@@ -126,4 +127,9 @@ router.get('/ticker/recommendations/:ticker', (req, res) => {
 
 app.use('/api', router);
 
-app.listen(3000);
+app.get('/', (req, res) => res.sendFile(__dirname + '/demo.html'));
+
+app.listen(3000, () => {
+  console.log('Server started on http://localhost:3000/api');
+  open('http://localhost:3000/');
+});
