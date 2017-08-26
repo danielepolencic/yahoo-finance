@@ -201,3 +201,43 @@ api
   .then(data => console.log(data))
   .catch(err => console.log(err));
 ```
+
+### futures
+
+> NEW in v3.1!
+
+Retrieves futures data for a given market.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| market       | String  | the market symbol |
+| range        | String  | OPTIONAL the amount of days (default: 5d) |
+| interval     | String  | OPTIONAL time interval for data points (default: 1d) |
+| prePostData  | Boolean | OPTIONAL add pre/post data (default: false) |
+
+```js
+api
+  .futures('NQ=F')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
+
+### commodities
+
+> NEW in v3.1!
+
+Retrieves one or more commodities futures data.
+
+| Param        | Type    | Desc  |
+| ------------ |:-------:| :---- |
+| commodities  | String  | the list of commodities (comma-separated) |
+| range        | String  | OPTIONAL the amount of days (default: 1d) |
+| interval     | String  | OPTIONAL time interval for data points (default: 5m) |
+| prePostData  | Boolean | OPTIONAL add pre/post data (default: false) |
+
+```js
+api
+  .commodities('GC=F,SI=F,PL=F,HG=F')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+```
