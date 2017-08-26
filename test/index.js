@@ -363,4 +363,54 @@ describe('The Yahoo Finance Data module', () => {
         });
     });
   });
+
+  describe('#futures', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get markets futures data', () => {
+      return API
+        .futures('NG=F')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
+
+  describe('#commodities', () => {
+    let API;
+
+    beforeEach(() => {
+      API = new YahooFinanceAPI({
+        key: 'somekey',
+        secret: 'somesecret'
+      });
+
+      API.ajax = sinon.stub().returns(Promise.resolve(true));
+    });
+
+    afterEach(() => {
+      API = null;
+    });
+
+    it('should get futures data for a list of commodities', () => {
+      return API
+        .commodities('GC=F')
+        .then((res) => {
+          expect(API.ajax.called).to.equal(true);
+        });
+    });
+  });
 });
