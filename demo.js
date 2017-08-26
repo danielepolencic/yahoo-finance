@@ -8,7 +8,7 @@ const api = new YahooFinanceAPI(apiDetails);
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  res.json({status: 'ok', version: '3.1.0'});
+  res.json({status: 'ok', version: '3.1.1'});
 });
 
 /**
