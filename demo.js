@@ -8,18 +8,7 @@ const api = new YahooFinanceAPI(apiDetails);
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  res.json({status: 'ok', version: '3.1.1'});
-});
-
-/**
- * @desc Standard Yahoo! Quote data (15 min delay)
- * @example http://localhost:3000/api/quote/info/yahoo,msft,aapl
- */
-router.get('/quote/info/:tickers', (req, res) => {
-  api
-    .getQuotes(req.params.tickers)
-    .then(data => res.json(data))
-    .catch(err => res.json(err));
+  res.json({status: 'ok', version: '3.2.0'});
 });
 
 /**

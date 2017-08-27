@@ -73,26 +73,6 @@ describe('The Yahoo Finance Data module', () => {
     });
   });
 
-  describe('The formatSymbolList method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should format a list of symbols', () => {
-      let list = API.formatSymbolList('yhoo,aapl,msft');
-      expect(list).to.equal('"YHOO","AAPL","MSFT"');
-    });
-  });
-
   describe('The uppercaseList method', () => {
     let API;
 
@@ -110,31 +90,6 @@ describe('The Yahoo Finance Data module', () => {
     it('should uppercase a list of symbols', () => {
       let list = API.uppercaseList('yhoo,aapl,msft');
       expect(list).to.equal('YHOO,AAPL,MSFT');
-    });
-  });
-
-  describe('The getQuotes method', () => {
-    let API;
-
-    beforeEach(() => {
-      API = new YahooFinanceAPI({
-        key: 'somekey',
-        secret: 'somesecret'
-      });
-
-      API.fetch = sinon.stub().returns(Promise.resolve(true));
-    });
-
-    afterEach(() => {
-      API = null;
-    });
-
-    it('should call YQL to get some quote data', () => {
-      return API
-        .getQuotes('aapl')
-        .then((res) => {
-          expect(API.fetch.calledWith('select * from yahoo.finance.quotes where symbol in ("AAPL")')).to.equal(true);
-        });
     });
   });
 
@@ -172,7 +127,7 @@ describe('The Yahoo Finance Data module', () => {
         secret: 'somesecret'
       });
 
-      API.fetch = sinon.stub().returns(Promise.resolve(true));
+      API.commodities = sinon.stub().returns(Promise.resolve(true));
     });
 
     afterEach(() => {
@@ -183,7 +138,7 @@ describe('The Yahoo Finance Data module', () => {
       return API
         .getForexData('EURUSD')
         .then((res) => {
-          expect(API.fetch.calledWith('select * from yahoo.finance.xchange where pair in ("EURUSD")')).to.equal(true);
+          expect(API.commodities.called).to.equal(true);
         });
     });
   });
