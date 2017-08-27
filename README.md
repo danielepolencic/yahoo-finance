@@ -35,18 +35,7 @@ const api = new YahooFinanceAPI({
 
 ### getQuotes(symbolList)
 
-Retrieves Yahoo! standard quote data for one or more securities (15 min delay).
-
-| Param        | Type    | Desc  |
-| ------------ |:-------:| :---- |
-| symbolList   | String  | the ticker list, comma-separated |
-
-```js
-api
-  .getQuotes('YHOO,MSFT,AAPL')
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-```
+> DEPRECATED AS OF 3.2
 
 ### getReatimeQuotes(symbolList)
 
@@ -86,6 +75,8 @@ api
 ```
 
 ### getForexData(exchanges)
+
+> UPDATED IN v3.2 !
 
 Retrieves forex data for one or multiple currency pairs.
 
