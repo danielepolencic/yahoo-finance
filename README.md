@@ -106,7 +106,7 @@ api
   .catch(err => console.log(err));
 ```
 
-### getIntradayChartData(ticker, [interval, prePostData])
+### getIntradayChartData(ticker, [interval, range, prePostData])
 
 > UPDATED IN v3!
 
@@ -116,6 +116,7 @@ Retrieves intraday chart data for a given security.
 | ------------ |:-------:| :---- |
 | ticker       | String  | the ticker |
 | interval     | String  | OPTIONAL time interval for data points (default: 2m) |
+| range        | String  | OPTIONAL data range (default: 1d) |
 | prePostData  | Boolean | OPTIONAL add pre/post data (default: true) |
 
 ```js
